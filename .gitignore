@@ -1,0 +1,15 @@
+#-------------------------------------------------------------------
+# Git Ignore Configuration
+#-------------------------------------------------------------------
+
+# Local personal data containing personal contact information
+resume/configuration/resume_data.json
+
+# Local tectonic & LaTeX compilation artifacts
+.tectonic/
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz

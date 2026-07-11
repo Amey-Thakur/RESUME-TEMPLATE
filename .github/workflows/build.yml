@@ -1,0 +1,92 @@
+name: Build Resume PDF
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual triggers from the Actions tab
+
+permissions:
+  contents: write # Required for deleting and creating releases
+
+jobs:
+  build:
+    name: Compile LaTeX → PDF
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Setup the self-contained Tectonic compiler
+      - name: Setup Tectonic
+        uses: wtfjoke/setup-tectonic@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      # 3. Pre-process LaTeX documents from JSON data
+      - name: Pre-process LaTeX Documents
+        run: pwsh scripts/generate_latex.ps1
+
+      # 4. Compile resume and cover letter
+      - name: Compile LaTeX Documents
+        run: |
+          # Dynamically parse the name from JSON config to define the output PDF filename
+          SAFE_NAME=$(jq -r '.personal_info.name' resume/configuration/resume_data.json | tr -cs 'a-zA-Z0-9' '_' | sed 's/^_//;s/_$//')
+          echo "Determined Safe Name for PDFs: $SAFE_NAME"
+          
+          mkdir -p output
+          tectonic resume/source/resume.tex --outdir output
+          tectonic resume/source/cover_letter.tex --outdir output
+
+          # Duplicate files to support both generic and custom named copies
+          cp output/resume.pdf output/Resume.pdf
+          mv output/resume.pdf output/"${SAFE_NAME}_Resume.pdf"
+          
+          cp output/cover_letter.pdf output/Cover_Letter.pdf
+          mv output/cover_letter.pdf output/"${SAFE_NAME}_Cover_Letter.pdf"
+
+      # 5. Upload the compiled files as workflow artifacts
+      - name: Upload Resume PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Resume
+          path: |
+            output/Resume.pdf
+            output/*_Resume.pdf
+          retention-days: 90
+
+      - name: Upload Cover Letter PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cover_Letter
+          path: |
+            output/Cover_Letter.pdf
+            output/*_Cover_Letter.pdf
+          retention-days: 90
+
+      # 6. Delete previous GitHub Release and tag named 'latest'
+      - name: Delete old release and tag
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: gh release delete latest --yes --cleanup-tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      # 7. Create or update the 'latest' release with the newly built PDFs
+      - name: Create GitHub Release with PDFs
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "Latest Resume"
+          body: |
+            Auto-generated resume and cover letter PDFs from the latest `main` branch commit.
+            Built from LaTeX source using the Tectonic typesetting engine.
+          files: |
+            output/*.pdf
+          make_latest: true
