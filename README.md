@@ -9,11 +9,11 @@
 <p align="center">
   <a href="https://github.com/Amey-Thakur/RESUME-TEMPLATE/releases/latest"><img alt="Download Resume" src="https://img.shields.io/badge/Download%20Resume-2563EB?style=for-the-badge" /></a>
   &nbsp;&nbsp;
-  <a href="https://github.com/Amey-Thakur/RESUME-TEMPLATE/actions"><img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/Amey-Thakur/RESUME-TEMPLATE/build.yml?style=for-the-badge&label=Build" /></a>
+  <a href="https://github.com/Amey-Thakur/RESUME-TEMPLATE/actions/workflows/build.yml"><img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/Amey-Thakur/RESUME-TEMPLATE/build.yml?branch=main&style=for-the-badge&label=Build" /></a>
 </p>
 
 <p align="center">
-  <img alt="Views" src="https://komarev.com/ghpvc/?username=Amey-Thakur&label=Views&color=2563eb&style=flat-square" />
+  <img alt="Views" src="https://komarev.com/ghpvc/?username=Amey-Thakur-RESUME-TEMPLATE&label=Views&color=2563eb&style=flat-square" />
 </p>
 
 ---
@@ -33,22 +33,24 @@
 ├── .github/workflows/build.yml       # CI/CD: compile and release PDFs
 ├── resume/
 │   ├── configuration/
-│   │   ├── resume_data.template.json  # Template with bracketed placeholders
-│   │   ├── resume_data.json           # Your data (gitignored)
-│   │   └── metadata.tex               # Generated: name, phone, email, links
-│   ├── sections/                       # Generated: summary, education, experience, skills, certifications
+│   │   └── resume_data.template.json  # Template with bracketed placeholders
 │   ├── source/
-│   │   ├── resume.tex                  # Main resume document
-│   │   └── cover_letter.tex            # Main cover letter document
+│   │   └── resume.tex                 # Main resume entry point
 │   └── templates/
-│       ├── resume.sty                  # Page layout, margins, custom commands
-│       └── cover_letter.sty            # Cover letter layout
+│       ├── resume.sty                 # Page layout, margins, custom commands
+│       └── cover_letter.sty           # Cover letter layout
 ├── scripts/
-│   ├── generate_latex.ps1              # JSON to LaTeX pre-processor
-│   └── build.ps1                       # Full build: pre-process + compile
-├── output/                             # Compiled PDFs
+│   ├── generate_latex.ps1             # JSON to LaTeX pre-processor
+│   └── build.ps1                      # Full build: pre-process + compile
 └── README.md
 ```
+
+Files generated at build time (gitignored):
+- `resume/configuration/resume_data.json` — your personal data
+- `resume/configuration/metadata.tex` — LaTeX contact variables
+- `resume/sections/*.tex` — section content files
+- `resume/source/cover_letter.tex` — cover letter document
+- `output/*.pdf` — compiled PDFs
 
 ---
 

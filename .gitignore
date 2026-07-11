@@ -1,11 +1,15 @@
-#-------------------------------------------------------------------
-# Git Ignore Configuration
-#-------------------------------------------------------------------
-
-# Local personal data containing personal contact information
+# Personal data (contains contact information)
 resume/configuration/resume_data.json
 
-# Local tectonic & LaTeX compilation artifacts
+# Generated files (rebuilt by scripts/generate_latex.ps1)
+resume/configuration/metadata.tex
+resume/sections/
+resume/source/cover_letter.tex
+
+# Compiled output (rebuilt by scripts/build.ps1)
+output/
+
+# LaTeX intermediates
 .tectonic/
 *.aux
 *.log
