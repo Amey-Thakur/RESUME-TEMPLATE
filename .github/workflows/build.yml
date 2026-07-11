@@ -32,41 +32,22 @@ jobs:
       - name: Pre-process LaTeX Documents
         run: pwsh scripts/generate_latex.ps1
 
-      # 4. Compile resume and cover letter
+      # 4. Compile and rename PDFs
       - name: Compile LaTeX Documents
         run: |
-          # Dynamically parse the name from JSON config to define the output PDF filename
           SAFE_NAME=$(jq -r '.personal_info.name' resume/configuration/resume_data.json | tr -cs 'a-zA-Z0-9' '_' | sed 's/^_//;s/_$//')
-          echo "Determined Safe Name for PDFs: $SAFE_NAME"
-          
           mkdir -p output
           tectonic resume/source/resume.tex --outdir output
           tectonic resume/source/cover_letter.tex --outdir output
-
-          # Duplicate files to support both generic and custom named copies
-          cp output/resume.pdf output/Resume.pdf
           mv output/resume.pdf output/"${SAFE_NAME}_Resume.pdf"
-          
-          cp output/cover_letter.pdf output/Cover_Letter.pdf
           mv output/cover_letter.pdf output/"${SAFE_NAME}_Cover_Letter.pdf"
 
-      # 5. Upload the compiled files as workflow artifacts
-      - name: Upload Resume PDF artifact
+      # 5. Upload compiled PDFs as build artifacts
+      - name: Upload PDF artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Resume
-          path: |
-            output/Resume.pdf
-            output/*_Resume.pdf
-          retention-days: 90
-
-      - name: Upload Cover Letter PDF artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Cover_Letter
-          path: |
-            output/Cover_Letter.pdf
-            output/*_Cover_Letter.pdf
+          name: Resume-PDFs
+          path: output/*.pdf
           retention-days: 90
 
       # 6. Delete previous GitHub Release and tag named 'latest'

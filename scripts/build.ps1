@@ -37,26 +37,20 @@ Write-Host "Compiling Cover Letter..." -ForegroundColor Yellow
 $CoverLetterSource = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\resume\source\cover_letter.tex"))
 & $TectonicPath $CoverLetterSource --outdir $OutputDir
 
-# Standardize output filenames dynamically based on the configured name
+# Rename output files
 $RawResume = Join-Path $OutputDir "resume.pdf"
 $RawCover = Join-Path $OutputDir "cover_letter.pdf"
 
 $Data = Get-Content -Raw -Path (Join-Path $PSScriptRoot "..\resume\configuration\resume_data.json") | ConvertFrom-Json
-$Name = $Data.personal_info.name
-$SafeName = $Name -replace '[^a-zA-Z0-9\s]', '' -replace '\s+', '_'
+$SafeName = ($Data.personal_info.name -replace '[^a-zA-Z0-9\s]', '' -replace '\s+', '_').Trim('_')
 
 if (Test-Path $RawResume) {
-    Copy-Item $RawResume (Join-Path $OutputDir "${SafeName}_Resume.pdf") -Force
-    $TempResume = Join-Path $OutputDir "temp_resume.pdf"
-    Rename-Item $RawResume -NewName "temp_resume.pdf" -Force
-    Rename-Item $TempResume -NewName "Resume.pdf" -Force
-    Write-Host "Generated: Resume.pdf and ${SafeName}_Resume.pdf" -ForegroundColor Green
+    Move-Item $RawResume (Join-Path $OutputDir "${SafeName}_Resume.pdf") -Force
+    Write-Host "Generated: ${SafeName}_Resume.pdf" -ForegroundColor Green
 }
 
 if (Test-Path $RawCover) {
-    Copy-Item $RawCover (Join-Path $OutputDir "${SafeName}_Cover_Letter.pdf") -Force
-    $TempCover = Join-Path $OutputDir "temp_cover.pdf"
-    Rename-Item $RawCover -NewName "temp_cover.pdf" -Force
-    Rename-Item $TempCover -NewName "Cover_Letter.pdf" -Force
-    Write-Host "Generated: Cover_Letter.pdf and ${SafeName}_Cover_Letter.pdf" -ForegroundColor Green
+    Move-Item $RawCover (Join-Path $OutputDir "${SafeName}_Cover_Letter.pdf") -Force
+    Write-Host "Generated: ${SafeName}_Cover_Letter.pdf" -ForegroundColor Green
 }
+
