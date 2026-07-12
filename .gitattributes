@@ -1,0 +1,16 @@
+# Resume Template Repository .gitattributes
+
+# Set default behavior to automatically detect text files and normalize line endings
+* text=auto
+
+# Explicitly declare text files to always be normalized and use LF
+*.md text
+*.yml text
+*.json text
+*.tex text
+*.sty text
+*.ps1 text
+*.cff text
+
+# Treat PDFs as binary
+*.pdf binary

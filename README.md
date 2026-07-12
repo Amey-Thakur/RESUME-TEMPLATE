@@ -9,7 +9,7 @@
 <p align="center">
   <a href="https://github.com/Amey-Thakur/RESUME-TEMPLATE/releases/latest"><img alt="Download Resume" src="https://img.shields.io/badge/Download%20Resume-2563EB?style=for-the-badge" /></a>
   &nbsp;&nbsp;
-  <a href="https://github.com/Amey-Thakur/RESUME-TEMPLATE/actions/workflows/build.yml"><img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/Amey-Thakur/RESUME-TEMPLATE/build.yml?branch=main&style=for-the-badge&label=Build" /></a>
+  <a href="https://github.com/Amey-Thakur/RESUME-TEMPLATE/actions/workflows/build.yml"><img alt="Build Status" src="https://github.com/Amey-Thakur/RESUME-TEMPLATE/actions/workflows/build.yml/badge.svg?branch=main" /></a>
 </p>
 
 <p align="center">

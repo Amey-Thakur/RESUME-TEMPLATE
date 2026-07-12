@@ -1,0 +1,24 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "RESUME-TEMPLATE",
+  "description": "A modular LaTeX resume and cover letter system with JSON-driven content, automated PDF compilation via Tectonic, and GitHub Actions release publishing.",
+  "identifier": "RESUME-TEMPLATE",
+  "license": "https://spdx.org/licenses/MIT.html",
+  "programmingLanguage": [
+    "LaTeX",
+    "PowerShell",
+    "JSON"
+  ],
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Amey",
+      "familyName": "Thakur",
+      "@id": "https://orcid.org/0000-0001-5644-1575"
+    }
+  ],
+  "codeRepository": "https://github.com/Amey-Thakur/RESUME-TEMPLATE",
+  "version": "1.0.0",
+  "dateCreated": "2025-07-11"
+}
