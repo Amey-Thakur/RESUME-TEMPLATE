@@ -7,8 +7,12 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Amey-Thakur/RESUME-TEMPLATE/releases/latest"><img alt="Download Resume" src="https://img.shields.io/badge/Download%20Resume-2563EB?style=for-the-badge" /></a>
+  <a href="https://github.com/Amey-Thakur/RESUME-TEMPLATE/releases/latest/download/YOUR_FULL_NAME_Resume.pdf"><img alt="Download Resume" src="https://img.shields.io/badge/Download%20Resume-2563EB?style=for-the-badge" /></a>
   &nbsp;&nbsp;
+  <a href="https://github.com/Amey-Thakur/RESUME-TEMPLATE/releases/latest/download/YOUR_FULL_NAME_Cover_Letter.pdf"><img alt="Download Cover Letter" src="https://img.shields.io/badge/Download%20Cover%20Letter-2563EB?style=for-the-badge" /></a>
+</p>
+
+<p align="center">
   <a href="https://github.com/Amey-Thakur/RESUME-TEMPLATE/actions/workflows/build.yml"><img alt="Build Status" src="https://github.com/Amey-Thakur/RESUME-TEMPLATE/actions/workflows/build.yml/badge.svg?branch=main" /></a>
 </p>
 
@@ -73,11 +77,18 @@ This repository separates content from formatting. All resume data lives in one 
 
 ## Local Build
 
+**Windows (PowerShell):**
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/build.ps1
 ```
 
-Requires [Tectonic](https://tectonic-typesetting.github.io) installed globally or placed at `../bin/tectonic.exe` relative to the repository root.
+**Mac / Linux (Bash & Python 3):**
+```bash
+chmod +x scripts/build.sh
+./scripts/build.sh
+```
+
+Requires [Tectonic](https://tectonic-typesetting.github.io) installed globally.
 
 ---
 

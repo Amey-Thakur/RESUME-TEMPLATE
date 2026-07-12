@@ -11,6 +11,8 @@
 *.sty text
 *.ps1 text
 *.cff text
+*.py text
+*.sh text eol=lf
 
 # Treat PDFs as binary
 *.pdf binary

@@ -1,20 +1,10 @@
 cff-version: 1.2.0
-message: "If you use this project or its associated materials, please cite as below."
+message: "If you use this project or its associated academic materials, please cite them as below."
 authors:
-  - family-names: "Thakur"
-    given-names: "Amey"
-    orcid: "https://orcid.org/0000-0001-5644-1575"
-title: "Resume Template"
-abstract: "A modular LaTeX resume and cover letter system with JSON-driven content, automated PDF compilation via Tectonic, and GitHub Actions release publishing."
-version: "1.0.0"
-date-released: "2025-07-11"
-license: "MIT"
-repository-code: "https://github.com/Amey-Thakur/RESUME-TEMPLATE"
+- family-names: "Thakur"
+  given-names: "Amey"
+  orcid: "https://orcid.org/0000-0001-5644-1575"
+title: "RESUME-TEMPLATE"
+version: 1.0.0
+date-released: 2026-07-11
 url: "https://github.com/Amey-Thakur/RESUME-TEMPLATE"
-keywords:
-  - resume
-  - cover-letter
-  - latex
-  - tectonic
-  - github-actions
-  - template
