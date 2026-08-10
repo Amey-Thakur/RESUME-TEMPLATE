@@ -3,20 +3,21 @@
 *{margin:0;padding:0;box-sizing:border-box}html,body{width:1280px;height:640px}
 body{background:#FAFBFC;font-family:Archivo,sans-serif;position:relative;overflow:hidden}
 .spine{position:absolute;left:0;top:0;width:12px;height:100%;background:linear-gradient(180deg,#1E3A8A 0%,#2563EB 100%);z-index:4}
-.wrap{position:absolute;inset:0;padding:52px 62px 44px 78px;display:flex;gap:54px;align-items:stretch}
-.left{flex:1;display:flex;flex-direction:column}
+.wrap{position:absolute;inset:0;padding:0 62px 0 78px;display:flex;gap:60px;align-items:center}
+.left{flex:1}
 .kicker{font-size:17px;font-weight:700;letter-spacing:.17em;color:#2563EB;text-transform:uppercase}
-.h1{margin-top:18px;font-size:66px;font-weight:700;line-height:1.05;color:#12141A;letter-spacing:-.028em;padding-bottom:.06em}
+.h1{margin-top:18px;font-size:68px;font-weight:700;line-height:1.04;color:#12141A;letter-spacing:-.028em;padding-bottom:.06em}
 .sub{margin-top:22px;font-size:23px;color:#43505E;line-height:1.5;max-width:500px}
-.tag{margin-top:26px;display:inline-block;align-self:flex-start;font-family:Consolas,monospace;font-size:16px;color:#1E3A8A;background:#E8EEFB;border:1px solid #CBD9F5;border-radius:6px;padding:9px 15px}
-.foot{margin-top:auto}
-.who{font-size:24px;font-weight:700;color:#12141A;padding-bottom:.08em}
+.tag{margin-top:26px;display:inline-block;font-family:Consolas,monospace;font-size:16px;color:#1E3A8A;background:#E8EEFB;border:1px solid #CBD9F5;border-radius:6px;padding:9px 15px}
+.who{margin-top:40px;font-size:24px;font-weight:700;color:#12141A;padding-bottom:.08em}
 .who small{display:block;font-size:15px;font-weight:400;color:#6B7684;margin-top:7px}
-.right{width:512px;flex:none;display:flex;flex-direction:column;justify-content:space-between;padding:6px 0 10px}
-.step{display:flex;gap:18px;align-items:flex-start}
-.step i{flex:none;width:38px;height:38px;border-radius:50%;background:#2563EB;color:#fff;font-style:normal;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.right{width:512px;flex:none;position:relative}
+.right:before{content:'';position:absolute;left:19px;top:34px;bottom:34px;width:2px;background:#CBD9F5}
+.step{display:flex;gap:20px;align-items:flex-start;position:relative;padding:15px 0}
+.step i{flex:none;width:40px;height:40px;border-radius:50%;background:#2563EB;color:#fff;font-style:normal;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 6px #FAFBFC}
 .step b{display:block;font-size:25px;font-weight:600;color:#12141A;font-family:Consolas,monospace;line-height:1.25;padding-bottom:.04em}
-.step span{display:block;font-size:18px;color:#5A6672;margin-top:6px;line-height:1.45}
+.step span{display:block;font-size:18px;color:#5A6672;margin-top:5px;line-height:1.45}
+.tx{padding-top:2px}
 </style>
 <div class="spine"></div>
 <div class="wrap">
@@ -25,7 +26,7 @@ body{background:#FAFBFC;font-family:Archivo,sans-serif;position:relative;overflo
     <div class="h1">Resume<br>Template</div>
     <div class="sub">Edit one JSON file. The resume and cover letter build themselves.</div>
     <div class="tag">git push &rarr; PDF release</div>
-    <div class="foot"><div class="who">Amey Thakur<small>ORCID 0000-0001-5644-1575</small></div></div>
+    <div class="who">Amey Thakur<small>ORCID 0000-0001-5644-1575</small></div>
   </div>
-  <div class="right"><div class="step"><i>1</i><div><b>resume.json</b><span>All content in one file, no LaTeX to touch</span></div></div><div class="step"><i>2</i><div><b>pre-processor</b><span>Generates the LaTeX sections</span></div></div><div class="step"><i>3</i><div><b>Tectonic</b><span>Compiles the PDF, no local TeX install</span></div></div><div class="step"><i>4</i><div><b>GitHub Actions</b><span>Publishes it as a release</span></div></div></div>
+  <div class="right"><div class="step"><i>1</i><div class="tx"><b>resume.json</b><span>All content in one file, no LaTeX to touch</span></div></div><div class="step"><i>2</i><div class="tx"><b>pre-processor</b><span>Generates the LaTeX sections</span></div></div><div class="step"><i>3</i><div class="tx"><b>Tectonic</b><span>Compiles the PDF, no local TeX install</span></div></div><div class="step"><i>4</i><div class="tx"><b>GitHub Actions</b><span>Publishes it as a release</span></div></div></div>
 </div>
