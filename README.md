@@ -18,7 +18,7 @@ a release.
 [How it works](#how-it-works) &nbsp;·&nbsp;
 [The data file](#the-data-file) &nbsp;·&nbsp;
 [For AI agents](#for-ai-agents) &nbsp;·&nbsp;
-[Build it](#build-it-locally)
+[Set it up](#set-it-up)
 
 <br>
 
@@ -79,19 +79,12 @@ all call the same Python file, so the escaping rules cannot drift apart.
 
 ## The data file
 
-Copy the template and fill it in. Your own copy is gitignored, so personal
-details never reach a public repository.
+One file holds everything: contact details, every section of the resume, and
+the cover letter. Each field is a bracketed placeholder such as `[FULL_NAME]`,
+and the `_instructions` block at the top carries the rules for filling them in.
+[Set it up](#set-it-up) walks through it command by command.
 
-```bash
-cp resume/configuration/resume_data.template.json resume/configuration/resume_data.json
-```
-
-Every field is a bracketed placeholder such as `[FULL_NAME]`. Replace them
-all, then check nothing was missed:
-
-```bash
-python scripts/generate_latex.py --check
-```
+Two rules decide whether the result is any good.
 
 > [!TIP]
 > Write a plain `|` when you want a separator. The pre-processor typesets it.
@@ -113,8 +106,8 @@ instruction. The content model is one JSON file, and it carries its own
 directions in an `_instructions` block that the pre-processor ignores.
 
 1. Read `resume/configuration/resume_data.template.json`.
-2. Replace every `[BRACKETED_PLACEHOLDER]` with real content. Follow the
-   the `bullets` rule in `_instructions`.
+2. Replace every `[BRACKETED_PLACEHOLDER]` with real content, following the
+   `bullets` rule in `_instructions`.
 3. Delete any section you cannot fill honestly, and remove its name from
    `section_order`.
 4. Write the result to `resume/configuration/resume_data.json`.
@@ -127,11 +120,87 @@ omission, and the PDF filename. There is nothing else to decide.
 
 <br>
 
-## Build it locally
+## Set it up
 
-Needs [Python 3](https://www.python.org/downloads/) and
-[Tectonic](https://tectonic-typesetting.github.io). Tectonic downloads the TeX
-packages it needs on demand, so there is no TeX Live installation.
+From nothing to a compiled PDF. Every block below is one command, so you can
+copy each in turn.
+
+### 1. Get the files
+
+Press **Use this template** at the top of this page for your own copy, or clone
+this one:
+
+```bash
+git clone https://github.com/Amey-Thakur/RESUME-TEMPLATE.git
+```
+
+```bash
+cd RESUME-TEMPLATE
+```
+
+### 2. Check Python
+
+Version 3.8 or newer. Nothing needs installing beyond the interpreter, because
+the pre-processor uses only the standard library.
+
+```bash
+python --version
+```
+
+If that is missing, take it from [python.org](https://www.python.org/downloads/).
+
+### 3. Install Tectonic
+
+Tectonic is the compiler. It is a single binary and it fetches the TeX packages
+it needs by itself, so there is no TeX Live to install.
+
+```bash
+brew install tectonic
+```
+
+```bash
+conda install -c conda-forge tectonic
+```
+
+```bash
+cargo install tectonic
+```
+
+Any one of those. On Windows without a package manager, take the binary from
+[the releases page](https://github.com/tectonic-typesetting/tectonic/releases)
+and put it on your `PATH`. Check it:
+
+```bash
+tectonic --version
+```
+
+### 4. Make your own data file
+
+```bash
+cp resume/configuration/resume_data.template.json resume/configuration/resume_data.json
+```
+
+```powershell
+Copy-Item resume/configuration/resume_data.template.json resume/configuration/resume_data.json
+```
+
+This copy is gitignored, so your details never reach a public repository.
+
+### 5. Fill it in
+
+Open `resume/configuration/resume_data.json` and replace every
+`[PLACEHOLDER]`. The `_instructions` block at the top of the file says how to
+write the bullets and how to drop a section you do not need.
+
+### 6. Check nothing was missed
+
+Exits non-zero and lists what is left while any placeholder remains.
+
+```bash
+python scripts/generate_latex.py --check
+```
+
+### 7. Build
 
 ```bash
 ./scripts/build.sh
@@ -141,11 +210,32 @@ packages it needs on demand, so there is no TeX Live installation.
 powershell -ExecutionPolicy Bypass -File scripts/build.ps1
 ```
 
-To regenerate the LaTeX without compiling:
+The PDFs land in `output/`, named after you.
 
 ```bash
-python scripts/generate_latex.py
+ls output
 ```
+
+<br>
+
+### Working offline
+
+Only step 3 and the first build need a network. Tectonic caches every package
+it downloads, so once one build has finished the whole pipeline runs with no
+connection. To prove it, and to make a missing package an error rather than a
+silent download:
+
+```bash
+tectonic --only-cached resume/source/resume.tex --outdir output
+```
+
+> [!TIP]
+> Regenerating the LaTeX without compiling is useful when you are editing the
+> JSON and want to see what it produces.
+>
+> ```bash
+> python scripts/generate_latex.py
+> ```
 
 <br>
 
