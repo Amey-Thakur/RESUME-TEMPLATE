@@ -84,13 +84,17 @@
 % \titlespacing* takes {left}{before}{after}. Setting both explicitly is what
 % replaces the old \vspace{-4pt} corrections, and it holds no matter how much
 % content sits above the heading.
+% The rule sits below the heading with a real gap. An earlier version pulled it
+% up with \vspace{-6pt} and struck it through the heading text, which is the
+% precise failure this package exists to avoid: a negative correction that
+% looks right at one font size and collides at another.
 \titleformat{\section}
   {\normalfont\large\scshape\raggedright}
   {}{0em}
   {}
-  [\vspace{-6pt}\hrule height 0.6pt \vspace{-2pt}]
+  [{\vspace{4pt}\hrule height 0.6pt}]
 
-\titlespacing*{\section}{0pt}{10pt}{6pt}
+\titlespacing*{\section}{0pt}{14pt}{9pt}
 
 %---------- The contact header -------------------------------------------
 % Separators are typeset as text, never as inline math. The generator emits a
