@@ -1,52 +1,27 @@
-%-------------------------
-% Modular Cover Letter Styling Package
-%-------------------------
-\ProvidesPackage{cover_letter}
+%-------------------------------------------------------------------------
+% cover_letter.sty
+% The cover letter document. Everything shared with the resume lives in
+% base.sty; only what is specific to a letter belongs here.
+%-------------------------------------------------------------------------
+\ProvidesPackage{cover_letter}[2026/08/15 Cover letter document style]
 
-\RequirePackage{latexsym}
-\RequirePackage[empty]{fullpage}
-\RequirePackage{titlesec}
-\RequirePackage{marvosym}
-\RequirePackage[usenames,dvipsnames]{color}
-\RequirePackage{verbatim}
-\RequirePackage{enumitem}
-\RequirePackage[hidelinks]{hyperref}
-\RequirePackage{fancyhdr}
-\RequirePackage[english]{babel}
-\RequirePackage{tabularx}
+\RequirePackage{../templates/base}
 
-% Ensure PDF generation is machine-readable and ATS-friendly
-\ifx\pdfgentounicode\undefined\else
-  \input{glyphtounicode}
-  \pdfgentounicode=1
-\fi
+% A letter reads as prose, so paragraphs are separated by space rather than
+% indented, and the text is set with a little more room to breathe.
+\setlength{\parskip}{9pt}
+\linespread{1.05}\selectfont
 
-\pagestyle{fancy}
-\fancyhf{} % Clear all header and footer fields
-\fancyfoot{}
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}
+% One paragraph of the letter body. Using a command rather than raw text keeps
+% the spacing identical between paragraphs no matter what the generator emits.
+\newcommand{\letterPara}[1]{#1\par}
 
-% Adjust margins
-\addtolength{\oddsidemargin}{-0.5in}
-\addtolength{\evensidemargin}{-0.5in}
-\addtolength{\textwidth}{1in}
-\addtolength{\topmargin}{-.5in}
-\addtolength{\textheight}{1.0in}
-
-\urlstyle{same}
-
-\raggedbottom
-\raggedright
-\setlength{\tabcolsep}{0in}
-
-% Header macro
-\newcommand{\makeHeader}{
-  \begin{center}
-    \textbf{\Huge \scshape \myName} \\ \vspace{1pt}
-    \small \myPhone \ $|$ \href{mailto:\myEmail}{\myEmail} $|$ 
-    \href{\myLinkedInUrl}{linkedin.com/in/\myLinkedIn} $|$
-    \href{\myGitHubUrl}{github.com/\myGitHub} \\
-    \small \myLocation
-  \end{center}
+% The recipient block, which tolerates any of its lines being empty.
+\newcommand{\letterRecipient}[3]{%
+  \begingroup
+  \setlength{\parskip}{0pt}%
+  \ifx\relax#1\relax\else\textbf{#1}\par\fi
+  \ifx\relax#2\relax\else#2\par\fi
+  \ifx\relax#3\relax\else#3\par\fi
+  \endgroup
 }

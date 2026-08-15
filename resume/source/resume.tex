@@ -1,16 +1,23 @@
-%-------------------------
-% Main Resume Entry Point
-%-------------------------
+%-------------------------------------------------------------------------
+% Resume document.
+%
+% This file is deliberately short and stable. Which sections appear, and in
+% what order, is decided by resume_data.json and written out by the
+% pre-processor into ../sections/_manifest.tex, so a candidate with no
+% publications produces a document with no Publications heading rather than an
+% empty one.
+%-------------------------------------------------------------------------
 \documentclass[letterpaper,11pt]{article}
 
 \usepackage{../templates/resume}
 \input{../configuration/metadata}
 
+\setDocumentMetadata{\myName\ Resume}{\myName}
+
 \begin{document}
+
   \makeHeader
-  \input{../sections/summary}
-  \input{../sections/education}
-  \input{../sections/experience}
-  \input{../sections/skills}
-  \input{../sections/certifications}
+
+  \input{../sections/_manifest}
+
 \end{document}

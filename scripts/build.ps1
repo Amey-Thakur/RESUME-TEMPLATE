@@ -1,56 +1,48 @@
-#-------------------------------------------------------------------
-# Local Build Script for LaTeX Documents via Tectonic
-#-------------------------------------------------------------------
+<#
+    Build the resume and the cover letter.
+
+        powershell -ExecutionPolicy Bypass -File scripts/build.ps1
+
+    Needs Python 3 for the pre-processor and Tectonic for the compile step.
+#>
+
 $ErrorActionPreference = "Stop"
 
-# Ensure output directory exists relative to the script location
-$OutputDir = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\output"))
-if (-not (Test-Path $OutputDir)) {
-    New-Item -ItemType Directory -Path $OutputDir -Force | Out-Null
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+Set-Location (Join-Path $ScriptDir "..")
+
+$OutputDir = "output"
+New-Item -ItemType Directory -Force -Path $OutputDir | Out-Null
+
+$Python = "python"
+if (Get-Command "py" -ErrorAction SilentlyContinue) { $Python = "py" }
+elseif (-not (Get-Command "python" -ErrorAction SilentlyContinue)) {
+    Write-Error "Python 3 was not found. Install it from https://www.python.org/downloads/"
 }
 
-# Run LaTeX generator pre-processor script
-Write-Host "Running LaTeX pre-processor..." -ForegroundColor Cyan
-& (Join-Path $PSScriptRoot "generate_latex.ps1")
+Write-Host "Pre-processing JSON into LaTeX"
+& $Python scripts/generate_latex.py
+if ($LASTEXITCODE -ne 0) { Write-Error "The pre-processor failed." }
 
-# Resolve Tectonic path
-$TectonicPath = "tectonic"
+$Tectonic = "tectonic"
 if (-not (Get-Command "tectonic" -ErrorAction SilentlyContinue)) {
-    # Check our pre-downloaded workspace bin binary
-    $WorkspaceBin = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\..\bin\tectonic.exe"))
-    if (Test-Path $WorkspaceBin) {
-        $TectonicPath = $WorkspaceBin
-    } else {
-        Write-Error "Tectonic LaTeX compiler not found globally or in the workspace binary folder."
-    }
+    if (Test-Path "bin/tectonic.exe") { $Tectonic = "bin/tectonic.exe" }
+    else { Write-Error "Tectonic was not found. Install it from https://tectonic-typesetting.github.io" }
 }
 
-Write-Host "Using Tectonic compiler at: $TectonicPath" -ForegroundColor Cyan
+Write-Host "Compiling with $Tectonic"
+& $Tectonic resume/source/resume.tex --outdir $OutputDir
+if ($LASTEXITCODE -ne 0) { Write-Error "The resume failed to compile." }
+& $Tectonic resume/source/cover_letter.tex --outdir $OutputDir
+if ($LASTEXITCODE -ne 0) { Write-Error "The cover letter failed to compile." }
 
-# Compile Resume.tex
-Write-Host "Compiling Resume..." -ForegroundColor Yellow
-$ResumeSource = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\resume\source\resume.tex"))
-& $TectonicPath $ResumeSource --outdir $OutputDir
-
-# Compile cover_letter.tex
-Write-Host "Compiling Cover Letter..." -ForegroundColor Yellow
-$CoverLetterSource = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\resume\source\cover_letter.tex"))
-& $TectonicPath $CoverLetterSource --outdir $OutputDir
-
-# Rename output files
-$RawResume = Join-Path $OutputDir "resume.pdf"
-$RawCover = Join-Path $OutputDir "cover_letter.pdf"
-
-$Data = Get-Content -Raw -Path (Join-Path $PSScriptRoot "..\resume\configuration\resume_data.json") | ConvertFrom-Json
-$SafeName = ($Data.personal_info.name -replace '[^a-zA-Z0-9\s]', '' -replace '\s+', '_').Trim('_')
-
-if (Test-Path $RawResume) {
-    Move-Item $RawResume (Join-Path $OutputDir "${SafeName}_Resume.pdf") -Force
-    Write-Host "Generated: ${SafeName}_Resume.pdf" -ForegroundColor Green
+# One implementation of the naming rule, shared with CI.
+$Stem = (& $Python scripts/generate_latex.py --name).Trim()
+if ($Stem) {
+    Move-Item -Force (Join-Path $OutputDir "resume.pdf")       (Join-Path $OutputDir "$($Stem)_Resume.pdf")
+    Move-Item -Force (Join-Path $OutputDir "cover_letter.pdf") (Join-Path $OutputDir "$($Stem)_Cover_Letter.pdf")
 }
 
-if (Test-Path $RawCover) {
-    Move-Item $RawCover (Join-Path $OutputDir "${SafeName}_Cover_Letter.pdf") -Force
-    Write-Host "Generated: ${SafeName}_Cover_Letter.pdf" -ForegroundColor Green
-}
-
+Write-Host ""
+Write-Host "Built:"
+Get-ChildItem (Join-Path $OutputDir "*.pdf") | ForEach-Object { Write-Host "  $($_.Name)" }

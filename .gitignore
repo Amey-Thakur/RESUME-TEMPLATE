@@ -1,13 +1,17 @@
 # Personal data (contains contact information)
 resume/configuration/resume_data.json
 
-# Generated files (rebuilt by scripts/generate_latex.ps1)
+# Generated files (rebuilt by scripts/generate_latex.py)
 resume/configuration/metadata.tex
 resume/sections/
 resume/source/cover_letter.tex
 
-# Compiled output (rebuilt by scripts/build.ps1)
+# Compiled output (rebuilt by scripts/build.sh or scripts/build.ps1)
 output/
+
+# Python bytecode from the pre-processor
+__pycache__/
+*.py[cod]
 
 # LaTeX intermediates
 .tectonic/

@@ -1,0 +1,163 @@
+%-------------------------------------------------------------------------
+% base.sty
+% Shared layout for the resume and the cover letter.
+%
+% Both documents load this. Nothing in here is specific to either one, so a
+% change to margins, fonts or link handling lands on both at once and the two
+% can never drift apart.
+%
+% Spacing is set once, declaratively, through titlesec and enumitem. There are
+% no negative \vspace corrections anywhere in this package: those are what make
+% a dense resume overlap when one more bullet is added.
+%-------------------------------------------------------------------------
+\ProvidesPackage{base}[2026/08/15 Shared resume and cover letter layout]
+
+%---------- Encoding and fonts -------------------------------------------
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage[english]{babel}
+
+%---------- Layout --------------------------------------------------------
+\RequirePackage[
+  letterpaper,
+  top=0.5in,
+  bottom=0.5in,
+  left=0.55in,
+  right=0.55in,
+  footskip=0.25in
+]{geometry}
+
+\RequirePackage{titlesec}
+\RequirePackage{enumitem}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{xcolor}
+\RequirePackage{fancyhdr}
+
+%---------- Links and PDF metadata ---------------------------------------
+% Metadata is set by the document, after the personal details are loaded, by
+% calling \setDocumentMetadata. An applicant tracking system reads these
+% fields, so they are worth filling in properly.
+\RequirePackage[hidelinks,unicode]{hyperref}
+\urlstyle{same}
+
+\newcommand{\setDocumentMetadata}[2]{%
+  \hypersetup{
+    pdftitle={#1},
+    pdfauthor={#2},
+    pdfcreator={Tectonic},
+    pdflang={en-US}
+  }%
+}
+
+%---------- Machine readability -------------------------------------------
+% Maps glyphs back to Unicode so the text layer copies and parses cleanly.
+% Without this, ligatures and hyphens come out of an ATS as mojibake.
+\ifx\pdfgentounicode\undefined\else
+  \input{glyphtounicode}
+  \pdfgentounicode=1
+\fi
+
+%---------- Page furniture ------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\tabcolsep}{0pt}
+\raggedright
+\raggedbottom
+
+%---------- Section headings ---------------------------------------------
+% \titlespacing* takes {left}{before}{after}. Setting both explicitly is what
+% replaces the old \vspace{-4pt} corrections, and it holds no matter how much
+% content sits above the heading.
+\titleformat{\section}
+  {\normalfont\large\scshape\raggedright}
+  {}{0em}
+  {}
+  [\vspace{-6pt}\hrule height 0.6pt \vspace{-2pt}]
+
+\titlespacing*{\section}{0pt}{10pt}{6pt}
+
+%---------- The contact header -------------------------------------------
+% Separators are typeset as text, never as inline math. The generator emits a
+% plain separator token and this command draws it, which keeps the escaping
+% rules in one place.
+\newcommand{\headerSep}{\hspace{5pt}\textbar\hspace{5pt}}
+
+\newcommand{\makeHeader}{%
+  \begin{center}
+    {\Huge\scshape\myName}\\[3pt]
+    \ifdefined\myTagline
+      {\small\myTagline}\\[3pt]
+    \fi
+    {\small\myContactLine}\\[2pt]
+    {\small\myLinkLine}
+  \end{center}
+  \vspace{4pt}
+}
+
+%---------- Entry lists ---------------------------------------------------
+% One list environment for every kind of entry. topsep and parsep are pinned
+% to zero so a section never gains stray vertical space from the list itself.
+\newlist{entries}{itemize}{2}
+\setlist[entries]{
+  label={},
+  leftmargin=0pt,
+  topsep=2pt,
+  parsep=0pt,
+  partopsep=0pt,
+  itemsep=5pt
+}
+
+\newlist{bullets}{itemize}{2}
+\setlist[bullets]{
+  label=\textbullet,
+  leftmargin=0.16in,
+  topsep=2pt,
+  parsep=0pt,
+  partopsep=0pt,
+  itemsep=1.5pt,
+  rightmargin=0pt
+}
+
+% A two-line entry: bold title with a right-aligned date, then an italic
+% subtitle with a right-aligned location.
+\newcommand{\entryTwoLine}[4]{%
+  \item
+  \begin{tabularx}{\textwidth}{@{}X r@{}}
+    \textbf{#1} & #2 \\
+    \textit{\small #3} & \textit{\small #4} \\
+  \end{tabularx}%
+  \vspace{1pt}
+}
+
+% A one-line entry: title on the left, anything on the right. Used by projects
+% and publications, where a second line would waste a whole line of the page.
+\newcommand{\entryOneLine}[2]{%
+  \item
+  \begin{tabularx}{\textwidth}{@{}X r@{}}
+    #1 & #2 \\
+  \end{tabularx}%
+  \vspace{1pt}
+}
+
+% A labelled run of comma-separated values, used by skills and certifications.
+\newcommand{\labelledLine}[2]{%
+  \item\small\textbf{#1}\hspace{2pt}#2
+}
+
+\newlist{labelled}{itemize}{1}
+\setlist[labelled]{
+  label={},
+  leftmargin=0pt,
+  topsep=2pt,
+  parsep=0pt,
+  partopsep=0pt,
+  itemsep=2.5pt
+}

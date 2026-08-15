@@ -1,99 +1,122 @@
 {
+  "_instructions": {
+    "purpose": "Every placeholder in square brackets must be replaced with real content. Nothing else in this file needs to change.",
+    "bullet_formula": "Accomplished [X] as measured by [Y] by doing [Z]. Lead with the outcome, name the number, then the method. A bullet with no number is a duty, not an achievement.",
+    "length": "One page for under ten years of experience. Two at most. Cut the oldest role before you cut a number.",
+    "omit_freely": "Delete any section you cannot fill honestly. Remove its name from section_order and the heading will not appear. An absent section reads better than a thin one.",
+    "section_order": "Put the strongest evidence first. Experience first once you have industry experience; projects or education first before that.",
+    "separators": "Write a plain | between items. The pre-processor typesets it. Do not write LaTeX here."
+  },
+
   "personal_info": {
     "name": "[YOUR_FULL_NAME]",
+    "title": "[YOUR_TARGET_TITLE_FOR_EXAMPLE_SOFTWARE_ENGINEER_OR_AI_ENGINEER]",
     "phone": "[YOUR_PHONE_NUMBER]",
     "email": "[YOUR_EMAIL_ADDRESS]",
-    "linkedin": "[YOUR_LINKEDIN_USERNAME]",
-    "linkedin_url": "https://linkedin.com/in/[YOUR_LINKEDIN_USERNAME]",
-    "github": "[YOUR_GITHUB_USERNAME]",
-    "github_url": "https://github.com/[YOUR_GITHUB_USERNAME]",
-    "location": "[YOUR_CITY_STATE_COUNTRY]"
-  },
-  "resume": {
-    "summary": "[YOUR_PROFESSIONAL_SUMMARY_OR_CAREER_OBJECTIVE_FOCUSING_ON_KEY_STRENGTHS_AND_TARGET_ROLE]",
-    "education": [
-      {
-        "institution": "[GRADUATE_UNIVERSITY_NAME]",
-        "location": "[GRADUATE_UNIVERSITY_LOCATION]",
-        "degree": "[GRADUATE_DEGREE_AND_MAJOR]",
-        "date": "[GRADUATION_DATE_OR_EXPECTED]"
-      },
-      {
-        "institution": "[UNDERGRADUATE_UNIVERSITY_NAME]",
-        "location": "[UNDERGRADUATE_UNIVERSITY_LOCATION]",
-        "degree": "[UNDERGRADUATE_DEGREE_AND_MAJOR]",
-        "date": "[GRADUATION_DATE]"
-      }
-    ],
-    "experience": [
-      {
-        "company": "[MOST_RECENT_COMPANY_NAME]",
-        "location": "[COMPANY_LOCATION]",
-        "role": "[YOUR_ROLE_TITLE]",
-        "date": "[EMPLOYMENT_START_DATE] -- [EMPLOYMENT_END_DATE_OR_PRESENT]",
-        "bullets": [
-          "[ACTION_VERB] [RESULT_ACHIEVED] by implementing [METHOD_OR_TECHNOLOGY], improving [METRIC] by [PERCENTAGE].",
-          "[ACTION_VERB] [CORE_RESPONSIBILITY] using [SKILL], resolving [PROBLEM] and reducing [METRIC] by [PERCENTAGE].",
-          "[ACTION_VERB] [COLLABORATIVE_ACTION] with [TEAM] to standardize [PROCESS_OR_SYSTEM], accelerating [METRIC] by [PERCENTAGE]."
-        ]
-      },
-      {
-        "company": "[PREVIOUS_COMPANY_NAME]",
-        "location": "[COMPANY_LOCATION]",
-        "role": "[YOUR_ROLE_TITLE]",
-        "date": "[EMPLOYMENT_START_DATE] -- [EMPLOYMENT_END_DATE]",
-        "bullets": [
-          "[ACTION_VERB] [RESULT_ACHIEVED] by implementing [METHOD_OR_TECHNOLOGY], improving [METRIC] by [PERCENTAGE].",
-          "[ACTION_VERB] [CORE_RESPONSIBILITY] using [SKILL], resolving [PROBLEM] and reducing [METRIC] by [PERCENTAGE].",
-          "[ACTION_VERB] [COLLABORATIVE_ACTION] with [TEAM] to standardize [PROCESS_OR_SYSTEM], accelerating [METRIC] by [PERCENTAGE]."
-        ]
-      }
-    ],
-    "skills": [
-      {
-        "category": "[SKILL_CATEGORY_1_E_G_TRUST_AND_SAFETY_OPERATIONS]",
-        "items": "[LIST_OF_SKILLS_SEPARATED_BY_COMMAS_E_G_CONTENT_MODERATION_FRAUD_INVESTIGATION]"
-      },
-      {
-        "category": "[SKILL_CATEGORY_2_E_G_GENAI_AND_PRODUCT_FAMILIARITY]",
-        "items": "[LIST_OF_SKILLS_SEPARATED_BY_COMMAS_E_G_PROMPT_ENGINEERING_LLM_EVALUATION]"
-      },
-      {
-        "category": "[SKILL_CATEGORY_3_E_G_PROGRAMMING_AND_SCRIPTING]",
-        "items": "[LIST_OF_SKILLS_SEPARATED_BY_COMMAS_E_G_PYTHON_SQL_JAVASCRIPT]"
-      },
-      {
-        "category": "[SKILL_CATEGORY_4_E_G_DATA_AND_INFRASTRUCTURE]",
-        "items": "[LIST_OF_SKILLS_SEPARATED_BY_COMMAS_E_G_AWS_LINUX_GIT]"
-      }
-    ],
-    "certifications": [
-      {
-        "category": "[CERTIFICATION_CATEGORY_1_E_G_TRUST_AND_SAFETY_OPERATIONS]",
-        "items": "[CERTIFICATE_1] | [CERTIFICATE_2]"
-      },
-      {
-        "category": "[CERTIFICATION_CATEGORY_2_E_G_ARTIFICIAL_INTELLIGENCE]",
-        "items": "[CERTIFICATE_1] | [CERTIFICATE_2]"
-      },
-      {
-        "category": "[CERTIFICATION_CATEGORY_3_E_G_DATA_PRIVACY_AND_SYSTEMS]",
-        "items": "[CERTIFICATE_1] | [CERTIFICATE_2]"
-      }
+    "location": "[YOUR_CITY_COUNTRY]",
+    "links": [
+      { "label": "linkedin.com/in/[YOUR_LINKEDIN_USERNAME]", "url": "https://linkedin.com/in/[YOUR_LINKEDIN_USERNAME]" },
+      { "label": "github.com/[YOUR_GITHUB_USERNAME]", "url": "https://github.com/[YOUR_GITHUB_USERNAME]" },
+      { "label": "[YOUR_PORTFOLIO_DOMAIN]", "url": "https://[YOUR_PORTFOLIO_DOMAIN]" }
     ]
   },
+
+  "resume": {
+    "section_order": ["summary", "experience", "projects", "skills", "education"],
+
+    "summary": "[ONE_OR_TWO_SENTENCES_NAMING_YOUR_SPECIALISM_YOUR_STRONGEST_EVIDENCE_AND_THE_ROLE_YOU_WANT_DELETE_THIS_SECTION_IF_YOUR_EXPERIENCE_SPEAKS_FOR_ITSELF]",
+
+    "experience": [
+      {
+        "role": "[YOUR_ROLE_TITLE]",
+        "company": "[COMPANY_NAME]",
+        "location": "[CITY_COUNTRY]",
+        "date": "[MONTH_YEAR] -- Present",
+        "bullets": [
+          "[SHIPPED_WHAT] serving [SCALE_FOR_EXAMPLE_REQUESTS_PER_SECOND_OR_USERS], cutting [METRIC] from [BEFORE] to [AFTER] by [TECHNICAL_APPROACH].",
+          "[DESIGNED_OR_LED_WHAT] across [NUMBER] services in [LANGUAGE_OR_STACK], reducing [COST_LATENCY_OR_ERROR_RATE] by [PERCENTAGE].",
+          "[DIAGNOSED_WHAT_PROBLEM] that [CONSEQUENCE], and fixed it by [ROOT_CAUSE_FIX], preventing [RECURRENCE_OR_SAVING].",
+          "[MENTORED_OR_INFLUENCED_WHOM] on [PRACTICE], which [MEASURABLE_TEAM_OUTCOME]."
+        ]
+      },
+      {
+        "role": "[EARLIER_ROLE_TITLE]",
+        "company": "[EARLIER_COMPANY_NAME]",
+        "location": "[CITY_COUNTRY]",
+        "date": "[MONTH_YEAR] -- [MONTH_YEAR]",
+        "bullets": [
+          "[BUILT_WHAT] in [LANGUAGE], which [OUTCOME_WITH_A_NUMBER].",
+          "[AUTOMATED_OR_MIGRATED_WHAT], removing [MANUAL_HOURS_OR_COST] per [PERIOD]."
+        ]
+      }
+    ],
+
+    "projects": [
+      {
+        "name": "[PROJECT_NAME]",
+        "stack": "[TWO_TO_FOUR_TECHNOLOGIES_SEPARATED_BY_COMMAS]",
+        "url": "https://github.com/[YOUR_GITHUB_USERNAME]/[REPOSITORY]",
+        "url_label": "github.com/[YOUR_GITHUB_USERNAME]/[REPOSITORY]",
+        "bullets": [
+          "[WHAT_IT_DOES_AND_THE_HARD_PART], measured by [BENCHMARK_STARS_USERS_OR_ACCURACY].",
+          "[THE_ENGINEERING_DECISION_YOU_WOULD_DEFEND_IN_AN_INTERVIEW_AND_WHY]."
+        ]
+      },
+      {
+        "name": "[SECOND_PROJECT_NAME]",
+        "stack": "[TECHNOLOGIES]",
+        "url": "https://github.com/[YOUR_GITHUB_USERNAME]/[REPOSITORY]",
+        "url_label": "github.com/[YOUR_GITHUB_USERNAME]/[REPOSITORY]",
+        "bullets": [
+          "[WHAT_IT_DOES_AND_THE_RESULT_WITH_A_NUMBER]."
+        ]
+      }
+    ],
+
+    "skills": [
+      { "category": "Languages", "items": "[PRIMARY_LANGUAGE], [SECOND_LANGUAGE], [THIRD_LANGUAGE], SQL" },
+      { "category": "Machine Learning", "items": "[FRAMEWORKS_FOR_EXAMPLE_PYTORCH_JAX], [TECHNIQUES_FOR_EXAMPLE_RAG_FINE_TUNING_EVALUATION]" },
+      { "category": "Infrastructure", "items": "[CLOUD_PROVIDER], [CONTAINERS_OR_ORCHESTRATION], [CI_SYSTEM], [DATASTORES]" },
+      { "category": "Practices", "items": "[FOR_EXAMPLE_DISTRIBUTED_SYSTEMS_DESIGN], [TESTING_APPROACH], [OBSERVABILITY_OR_PERFORMANCE_WORK]" }
+    ],
+
+    "education": [
+      {
+        "institution": "[UNIVERSITY_NAME]",
+        "location": "[CITY_COUNTRY]",
+        "degree": "[DEGREE_AND_FIELD]",
+        "date": "[MONTH_YEAR]",
+        "detail": "[OPTIONAL_ONE_LINE_FOR_A_THESIS_AWARD_OR_RELEVANT_COURSEWORK_DELETE_IF_UNREMARKABLE]"
+      }
+    ],
+
+    "publications": [
+      {
+        "citation": "[AUTHORS]. [TITLE]. [VENUE], [YEAR].",
+        "url": "https://doi.org/[DOI]",
+        "url_label": "DOI"
+      }
+    ],
+
+    "certifications": [
+      { "category": "Cloud", "items": "[CERTIFICATION_NAME], [ISSUER], [YEAR]" },
+      { "category": "Machine Learning", "items": "[CERTIFICATION_NAME], [ISSUER], [YEAR]" }
+    ]
+  },
+
   "cover_letter": {
     "recipient": {
-      "name": "[RECIPIENT_NAME_OR_HIRING_TEAM]",
+      "name": "[HIRING_MANAGER_NAME_OR_LEAVE_EMPTY]",
       "company": "[COMPANY_NAME]",
-      "address": "[COMPANY_ADDRESS]"
+      "address": "[COMPANY_CITY_COUNTRY]",
+      "greeting": "Dear [HIRING_MANAGER_SURNAME_OR_HIRING_TEAM],"
     },
-    "subject": "[RE_APPLICATION_FOR_YOUR_TARGET_ROLE_TITLE_AND_JOB_ID]",
+    "subject": "Application for [ROLE_TITLE], [REQUISITION_ID]",
     "paragraphs": [
-      "I am writing to express my eager interest in the [YOUR_TARGET_ROLE_TITLE] position. Throughout my career, I have specialized in [KEY_STRENGTH_1], [KEY_STRENGTH_2], and [KEY_STRENGTH_3]. I am actively pursuing a dedicated role in [YOUR_TARGET_DEPARTMENT], and my background in [YOUR_FIELD] makes me uniquely positioned to execute your mission.",
-      "During my tenure as a [YOUR_PREVIOUS_ROLE] with [PREVIOUS_COMPANY], I operated on [YOUR_MAIN_AREA_OF_IMPACT]. My primary responsibility involved [CORE_RESPONSIBILITY] to enforce [POLICIES_OR_STANDARDS], identify [PROBLEMS_OR_RISKS], and ensure [DESIRED_OUTCOME]. This firsthand experience directly translates to the requirements for your team.",
-      "Additionally, my background as a [ANOTHER_PREVIOUS_ROLE] at [ANOTHER_PREVIOUS_COMPANY] equipped me with advanced [INVESTIGATIVE_OR_TECHNICAL_CAPABILITIES]. My work focused on constructing [SYSTEM_OR_PROCESS] to analyze [DATA], flag [ANOMALIES_OR_BUGS], and prevent [ABUSE_OR_INEFFICIENCY], establishing a high comfort level with [RELEVANT_TOOLS_OR_ENVIRONMENTS].",
-      "I am seeking a long-term operational home where I can apply my problem-solving skills and technical background to add immediate value to your team. Your commitment to [COMPANY_VALUES_OR_MISSION] aligns perfectly with this goal, and I would be thrilled to contribute to that mission."
+      "I am applying for the [ROLE_TITLE] role. I work on [YOUR_SPECIALISM], most recently [ONE_CONCRETE_THING_YOU_SHIPPED_AND_WHAT_IT_DID], and I want to do that on [SPECIFIC_TEAM_PRODUCT_OR_PROBLEM_AT_THIS_COMPANY].",
+      "The work closest to yours is [PROJECT_OR_SYSTEM]. [WHAT_THE_HARD_PART_WAS_IN_ONE_SENTENCE]. [WHAT_YOU_DID_ABOUT_IT_AND_THE_MEASURED_RESULT]. [WHY_THAT_PROBLEM_RESEMBLES_THEIRS].",
+      "[A_SECOND_PIECE_OF_EVIDENCE_THAT_SHOWS_A_DIFFERENT_STRENGTH_FOR_EXAMPLE_OWNERSHIP_DEBUGGING_OR_WORKING_ACROSS_TEAMS_WITH_THE_OUTCOME_IT_PRODUCED].",
+      "I would welcome the chance to talk about [SPECIFIC_PROBLEM_THE_TEAM_IS_WORKING_ON]. Thank you for your time."
     ]
   }
 }

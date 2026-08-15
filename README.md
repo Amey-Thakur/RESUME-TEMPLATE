@@ -1,117 +1,202 @@
-<img width="100%" alt="Resume Template" src="https://capsule-render.vercel.app/api?type=waving&color=0:1e3a8a,100:2563eb&height=210&section=header&text=Resume%20Template&fontColor=ffffff&fontSize=54&fontAlignY=40&desc=Modular%20LaTeX%20Resume%20%C2%B7%20JSON%20Configuration%20%C2%B7%20Automated%20PDF%20Builds&descSize=16&descAlignY=62" />
+<div align="center">
 
-<h2 align="center">Resume and Cover Letter Template</h2>
+<br>
 
-<p align="center">
-  A modular LaTeX resume system. Content lives in a single JSON file. A pre-processor generates the LaTeX sections. Tectonic compiles the PDF. GitHub Actions publishes it as a release.
-</p>
+# Resume Template
 
-<p align="center">
-  <a href="https://github.com/Amey-Thakur/RESUME-TEMPLATE/releases/latest/download/YOUR_FULL_NAME_Resume.pdf"><img alt="Download Resume" src="https://img.shields.io/badge/Download%20Resume-2563EB?style=for-the-badge" /></a>
-  &nbsp;&nbsp;
-  <a href="https://github.com/Amey-Thakur/RESUME-TEMPLATE/releases/latest/download/YOUR_FULL_NAME_Cover_Letter.pdf"><img alt="Download Cover Letter" src="https://img.shields.io/badge/Download%20Cover%20Letter-2563EB?style=for-the-badge" /></a>
-</p>
+**Edit one JSON file. The resume and the cover letter build themselves.**
 
-<p align="center">
-  <a href="https://github.com/Amey-Thakur/RESUME-TEMPLATE/actions/workflows/build.yml"><img alt="Build Status" src="https://github.com/Amey-Thakur/RESUME-TEMPLATE/actions/workflows/build.yml/badge.svg?branch=main" /></a>
-</p>
+<br>
 
-<p align="center">
-  <img alt="Views" src="https://komarev.com/ghpvc/?username=Amey-Thakur-RESUME-TEMPLATE&label=Views&color=2563eb&style=flat-square" />
-</p>
+A LaTeX resume and cover letter where the content lives in a single JSON file
+and no one has to touch the typesetting. A pre-processor writes the LaTeX, and
+Tectonic compiles the PDFs. Push to `main` and GitHub Actions publishes them as
+a release.
+
+<br>
+
+[Download the latest PDFs](https://github.com/Amey-Thakur/RESUME-TEMPLATE/releases/latest) &nbsp;·&nbsp;
+[The data file](#the-data-file) &nbsp;·&nbsp;
+[For AI agents](#for-ai-agents) &nbsp;·&nbsp;
+[Build it](#build-it-locally) &nbsp;·&nbsp;
+[Discussions](https://github.com/Amey-Thakur/RESUME-TEMPLATE/discussions)
+
+<br>
+
+[![Build](https://github.com/Amey-Thakur/RESUME-TEMPLATE/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/Amey-Thakur/RESUME-TEMPLATE/actions/workflows/build.yml)
+[![Technology](https://img.shields.io/badge/Technology-LaTeX_%7C_Python-8250DF)](https://tectonic-typesetting.github.io)
+[![Type](https://img.shields.io/badge/Type-Template-546E7A)](https://github.com/Amey-Thakur/RESUME-TEMPLATE/generate)
+[![License](https://img.shields.io/badge/License-MIT-lightgrey)](LICENSE)
+
+<br>
+
+<img src=".github/social-preview.png" alt="Resume Template: edit one JSON file, a pre-processor generates the LaTeX sections, Tectonic compiles the PDF, and GitHub Actions publishes it as a release" width="100%">
+
+</div>
 
 ---
 
-## How It Works
+<br>
 
-1. Edit `resume/configuration/resume_data.json` (or copy it from `resume_data.template.json`).
-2. Run `scripts/build.ps1`. The pre-processor reads the JSON, escapes LaTeX characters, and writes the `.tex` section files.
-3. Tectonic compiles `resume/source/resume.tex` and `resume/source/cover_letter.tex` into PDFs in `output/`.
-4. On push to `main`, GitHub Actions runs the same pipeline and publishes the PDFs as a release.
+## How it works
 
----
-
-## Repository Structure
-
+```mermaid
+flowchart LR
+    A["resume_data.json<br>all of your content"] --> B["generate_latex.py<br>escapes and writes the sections"]
+    B --> C["resume/sections/*.tex"]
+    B --> D["metadata.tex<br>_manifest.tex"]
+    C --> E(["Tectonic"])
+    D --> E
+    E --> F["output/*.pdf"]
+    F --> G["GitHub Release"]
 ```
-├── .github/workflows/build.yml       # CI/CD: compile and release PDFs
-├── resume/
-│   ├── configuration/
-│   │   └── resume_data.template.json  # Template with bracketed placeholders
-│   ├── source/
-│   │   └── resume.tex                 # Main resume entry point
-│   └── templates/
-│       ├── resume.sty                 # Page layout, margins, custom commands
-│       └── cover_letter.sty           # Cover letter layout
-├── scripts/
-│   ├── generate_latex.ps1             # JSON to LaTeX pre-processor
-│   └── build.ps1                      # Full build: pre-process + compile
-└── README.md
+
+Four properties follow from that shape, and each one is the reason a piece of
+this exists.
+
+**Content never touches LaTeX.** You write plain text. The pre-processor escapes
+every reserved character, so an ampersand in a company name or a percentage in a
+bullet cannot break the build.
+
+**Sections are optional.** `section_order` in the JSON decides which sections
+appear and in what order. Leave `publications` out of that list and the heading
+does not exist in the PDF. No empty sections, no editing the document to remove
+one.
+
+**The output is machine readable.** `\pdfgentounicode=1` and T1 encoding mean the
+text layer of the PDF copies and parses correctly, which is what an applicant
+tracking system reads.
+
+**One pre-processor, not two.** The shell script, the PowerShell script and CI
+all call the same Python file, so the escaping rules cannot drift apart.
+
+<br>
+
+## The data file
+
+Copy the template and fill it in. Your own copy is gitignored, so personal
+details never reach a public repository.
+
+```bash
+cp resume/configuration/resume_data.template.json resume/configuration/resume_data.json
 ```
 
-Files generated at build time (gitignored):
-- `resume/configuration/resume_data.json` — your personal data
-- `resume/configuration/metadata.tex` — LaTeX contact variables
-- `resume/sections/*.tex` — section content files
-- `resume/source/cover_letter.tex` — cover letter document
-- `output/*.pdf` — compiled PDFs
+Every field is a bracketed placeholder such as `[YOUR_FULL_NAME]`. Replace them
+all, then check nothing was missed:
 
----
+```bash
+python scripts/generate_latex.py --check
+```
 
-## For AI Agents
+> [!TIP]
+> Write a plain `|` when you want a separator. The pre-processor typesets it.
+> Never write LaTeX in the JSON: `&`, `%`, `_`, `#`, `$`, `{`, `}`, `~`, `^` and
+> `\` are all escaped for you.
 
-This repository separates content from formatting. All resume data lives in one JSON file with bracketed placeholders.
+> [!IMPORTANT]
+> Bullets are scored on evidence, not duties. The template asks for
+> **accomplished X, as measured by Y, by doing Z**. A bullet with no number in
+> it describes a job description rather than your work, and it is the first
+> thing a reviewer discounts.
 
-**To populate the template:**
+<br>
+
+## For AI agents
+
+This repository is built to be filled in by an agent without further
+instruction. The content model is one JSON file, and it carries its own
+directions in an `_instructions` block that the pre-processor ignores.
+
 1. Read `resume/configuration/resume_data.template.json`.
-2. Replace every `[BRACKETED_PLACEHOLDER]` with real data.
-3. Write the result to `resume/configuration/resume_data.json`.
-4. Run `scripts/build.ps1`.
+2. Replace every `[BRACKETED_PLACEHOLDER]` with real content. Follow the
+   `bullet_formula` in `_instructions`.
+3. Delete any section you cannot fill honestly, and remove its name from
+   `section_order`.
+4. Write the result to `resume/configuration/resume_data.json`.
+5. Run `python scripts/generate_latex.py --check`. It exits non-zero and lists
+   what is left while any placeholder remains.
+6. Build with `scripts/build.sh` or `scripts/build.ps1`.
 
-**Pre-processor handles automatically:**
-- Escaping LaTeX reserved characters (`&`, `%`, `_`, `#`, `$`)
-- Converting `|` to LaTeX math-mode `$|$`
-- Deriving the PDF filename from `personal_info.name`
+The pre-processor handles escaping, separator typesetting, section ordering and
+omission, and the PDF filename. There is nothing else to decide.
 
----
+<br>
 
-## Local Build
+## Build it locally
 
-**Windows (PowerShell):**
+Needs [Python 3](https://www.python.org/downloads/) and
+[Tectonic](https://tectonic-typesetting.github.io). Tectonic downloads the TeX
+packages it needs on demand, so there is no TeX Live installation.
+
+```bash
+./scripts/build.sh
+```
+
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/build.ps1
 ```
 
-**Mac / Linux (Bash & Python 3):**
+To regenerate the LaTeX without compiling:
+
 ```bash
-chmod +x scripts/build.sh
-./scripts/build.sh
+python scripts/generate_latex.py
 ```
 
-Requires [Tectonic](https://tectonic-typesetting.github.io) installed globally.
+<br>
+
+## What CI does
+
+On every push to `main`, the workflow runs the same pre-processor, compiles both
+documents with Tectonic, uploads the PDFs as artefacts for 90 days, and replaces
+the `latest` release with the new files.
+
+> [!NOTE]
+> While the name is still `[YOUR_FULL_NAME]`, the release publishes `resume.pdf`
+> and `cover_letter.pdf`. The candidate's name is only used in the filename once
+> it is a real one, so a fork never advertises a release for someone called
+> YOUR_FULL_NAME.
+
+<br>
+
+## What is where
+
+| Path | What it holds |
+| :--- | :--- |
+| [resume/configuration/](resume/configuration/) | `resume_data.template.json`, the only file you edit |
+| [resume/templates/](resume/templates/) | [`base.sty`](resume/templates/base.sty) with the shared layout, plus a thin style for each document |
+| [resume/source/](resume/source/) | `resume.tex`, the entry point. The cover letter is generated |
+| [scripts/](scripts/) | [`generate_latex.py`](scripts/generate_latex.py), the pre-processor, and the two build wrappers |
+| [.github/workflows/](.github/workflows/) | Compile and publish |
+
+Rebuilt on every run and gitignored: `resume_data.json`, `metadata.tex`,
+`resume/sections/`, `resume/source/cover_letter.tex`, `output/`.
+
+<br>
+
+## Design decisions
+
+| Decision | Why |
+| :--- | :--- |
+| Content in JSON | Separates data from typesetting, and is safe for a program to edit |
+| Bracketed placeholders | Unambiguous, and greppable, so unfilled fields can be detected rather than shipped |
+| A single Python pre-processor | Two implementations of the escaping rules drifted, and a separator bug survived in one of them |
+| Character-by-character escaping | A substitution cannot be re-processed by a later rule, which is what produced malformed output before |
+| `titlesec` and `enumitem` spacing | Declarative spacing holds as content grows. Negative `\vspace` corrections overlap once a section gets dense |
+| Shared `base.sty` | The resume and the cover letter cannot drift apart |
+| `\pdfgentounicode=1`, T1 | The PDF text layer stays selectable, searchable and parseable |
+| Tectonic | Self-contained, fetches packages on demand, no TeX Live |
+| `resume_data.json` gitignored | Personal details never reach a public fork |
+
+<br>
 
 ---
 
-## Automation
+<div align="center">
 
-On every push to `main`, GitHub Actions:
-1. Runs `generate_latex.ps1` via `pwsh` to populate the LaTeX files from JSON.
-2. Compiles both documents with Tectonic.
-3. Uploads PDFs as build artifacts (90-day retention).
-4. Publishes a `latest` GitHub Release with the compiled PDFs.
+Prepared by **[Amey Thakur](https://github.com/Amey-Thakur)** &nbsp;·&nbsp;
+ORCID [0000-0001-5644-1575](https://orcid.org/0000-0001-5644-1575)
 
----
+<sub>Released under the <a href="LICENSE">MIT License</a>, with citation metadata in <a href="CITATION.cff">CITATION.cff</a>.<br>
+Use it, fork it, and make it yours.</sub>
 
-## Design Decisions
-
-| Decision | Rationale |
-|---|---|
-| JSON content store | Separates data from formatting. Safe for automated editing. |
-| Bracketed placeholders | Unambiguous tokens. Easy to search and replace programmatically. |
-| PowerShell pre-processor | Cross-platform via `pwsh`. Runs natively on Windows and in GitHub Actions. |
-| Tectonic compiler | Self-contained. Downloads packages on demand. No TeX Live installation required. |
-| `resume_data.json` gitignored | Prevents personal information from being committed to public repositories. |
-| `\pdfgentounicode=1` | Ensures ATS-compatible, selectable, searchable text in the output PDF. |
-| 0.5-inch margins | Standard professional resume margins. Maximizes content area. |
-
-<img width="100%" alt="" src="https://capsule-render.vercel.app/api?type=waving&color=0:2563eb,100:1e3a8a&height=120&section=footer" />
+</div>

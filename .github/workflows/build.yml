@@ -30,17 +30,22 @@ jobs:
 
       # 3. Pre-process LaTeX documents from JSON data
       - name: Pre-process LaTeX Documents
-        run: pwsh scripts/generate_latex.ps1
+        run: python scripts/generate_latex.py
 
       # 4. Compile and rename PDFs
       - name: Compile LaTeX Documents
         run: |
-          SAFE_NAME=$(jq -r '.personal_info.name' resume/configuration/resume_data.json | tr -cs 'a-zA-Z0-9' '_' | sed 's/^_//;s/_$//')
           mkdir -p output
           tectonic resume/source/resume.tex --outdir output
           tectonic resume/source/cover_letter.tex --outdir output
-          mv output/resume.pdf output/"${SAFE_NAME}_Resume.pdf"
-          mv output/cover_letter.pdf output/"${SAFE_NAME}_Cover_Letter.pdf"
+          # The naming rule lives in the pre-processor so the local scripts and
+          # CI cannot disagree. It is empty while the name is a placeholder,
+          # which keeps the release from advertising YOUR_FULL_NAME.
+          STEM=$(python scripts/generate_latex.py --name)
+          if [ -n "$STEM" ]; then
+            mv output/resume.pdf output/"${STEM}_Resume.pdf"
+            mv output/cover_letter.pdf output/"${STEM}_Cover_Letter.pdf"
+          fi
 
       # 5. Upload compiled PDFs as build artifacts
       - name: Upload PDF artifacts
