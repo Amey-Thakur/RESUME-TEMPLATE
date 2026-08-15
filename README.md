@@ -15,11 +15,16 @@ a release.
 
 <br>
 
-[Download the latest PDFs](https://github.com/Amey-Thakur/RESUME-TEMPLATE/releases/latest) &nbsp;·&nbsp;
+[How it works](#how-it-works) &nbsp;·&nbsp;
 [The data file](#the-data-file) &nbsp;·&nbsp;
 [For AI agents](#for-ai-agents) &nbsp;·&nbsp;
-[Build it](#build-it-locally) &nbsp;·&nbsp;
-[Discussions](https://github.com/Amey-Thakur/RESUME-TEMPLATE/discussions)
+[Build it](#build-it-locally)
+
+<br>
+
+[![Download the resume](https://img.shields.io/badge/Download-Resume-2563EB?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/Amey-Thakur/RESUME-TEMPLATE/releases/latest/download/resume.pdf)
+&nbsp;&nbsp;
+[![Download the cover letter](https://img.shields.io/badge/Download-Cover_Letter-2563EB?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/Amey-Thakur/RESUME-TEMPLATE/releases/latest/download/cover_letter.pdf)
 
 <br>
 
