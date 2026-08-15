@@ -26,6 +26,7 @@ SECTIONS = ROOT / "resume" / "sections"
 SOURCE = ROOT / "resume" / "source"
 
 DATA_FILE = CONFIG / "resume_data.json"
+EXAMPLE_FILE = CONFIG / "resume_data.example.json"
 TEMPLATE_FILE = CONFIG / "resume_data.template.json"
 
 PLACEHOLDER = re.compile(r"\[[A-Z0-9_]+\]")
@@ -319,15 +320,20 @@ def main() -> int:
                     help="print the filename stem for the built PDFs and exit")
     args = ap.parse_args()
 
-    if not DATA_FILE.exists():
-        print(f"No {DATA_FILE.name}, starting from the template.")
-        shutil.copyfile(TEMPLATE_FILE, DATA_FILE)
+    # Your own data wins. Without it, build the worked example, so a fresh
+    # clone and the published release show what the template actually produces
+    # rather than a page of bracketed placeholders.
+    source = DATA_FILE if DATA_FILE.exists() else EXAMPLE_FILE
+    if not source.exists():
+        source = TEMPLATE_FILE
+    if source is not DATA_FILE and not args.name:
+        print(f"No {DATA_FILE.name}, building {source.name} instead.")
 
-    raw = DATA_FILE.read_text(encoding="utf-8")
+    raw = source.read_text(encoding="utf-8")
     try:
         data = json.loads(raw)
     except json.JSONDecodeError as e:
-        print(f"{DATA_FILE.name} is not valid JSON: {e}", file=sys.stderr)
+        print(f"{source.name} is not valid JSON: {e}", file=sys.stderr)
         return 2
 
     if args.name:

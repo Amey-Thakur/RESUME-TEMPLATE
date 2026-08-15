@@ -72,6 +72,14 @@
 \raggedright
 \raggedbottom
 
+% Ragged-right text still overflows when a single token is wider than the
+% column, which is what a long URL or an unbroken identifier does. Allowing a
+% little stretch and permitting hyphenation as a last resort keeps such a token
+% inside the margin instead of running off the page.
+\tolerance=2000
+\hyphenpenalty=500
+\setlength{\emergencystretch}{2em}
+
 %---------- Section headings ---------------------------------------------
 % \titlespacing* takes {left}{before}{after}. Setting both explicitly is what
 % replaces the old \vspace{-4pt} corrections, and it holds no matter how much

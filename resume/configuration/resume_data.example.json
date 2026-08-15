@@ -1,0 +1,127 @@
+{
+  "_instructions": {
+    "purpose": "A worked example, used to build the sample PDFs in the release. The person is invented. Copy resume_data.template.json to resume_data.json for your own, and this file will step aside.",
+    "why_it_reads_this_way": "Every bullet leads with an outcome and carries a number. Nothing here says 'responsible for'. That is the whole difference between a resume that is read and one that is skimmed."
+  },
+
+  "personal_info": {
+    "name": "Jordan Avery",
+    "title": "Software Engineer, Machine Learning Systems",
+    "phone": "+1 555 0134",
+    "email": "jordan.avery@example.com",
+    "location": "Toronto, Canada",
+    "links": [
+      { "label": "linkedin.com/in/jordanavery", "url": "https://linkedin.com/in/jordanavery" },
+      { "label": "github.com/jordanavery", "url": "https://github.com/jordanavery" },
+      { "label": "jordanavery.dev", "url": "https://jordanavery.dev" }
+    ]
+  },
+
+  "resume": {
+    "section_order": ["summary", "experience", "projects", "skills", "education", "publications"],
+
+    "summary": "Machine learning engineer with five years building retrieval and inference systems in production. Strongest on the unglamorous half: evaluation, latency and cost.",
+
+    "experience": [
+      {
+        "role": "Senior Software Engineer, ML Platform",
+        "company": "Northwind Systems",
+        "location": "Toronto, Canada",
+        "date": "Mar 2024 -- Present",
+        "bullets": [
+          "Rebuilt the retrieval layer behind a 40M document assistant, cutting median answer latency from 2.4s to 610ms by replacing per query re-ranking with a cached two stage retriever.",
+          "Cut inference spend 38% year on year, roughly 1.2M USD, by routing 71% of traffic to a distilled 3B model and holding the large model for queries an online classifier marked as hard.",
+          "Built the offline evaluation harness the team now gates releases on, 9,400 labelled cases across 6 task families, which caught 3 regressions that manual review had already passed.",
+          "Led the migration of 14 services from bespoke prompt templates to a shared, versioned schema, ending a class of production incidents caused by silent template drift.",
+          "Mentored 4 engineers through their first on call rotation, and wrote the runbook that reduced mean time to mitigation from 47 to 12 minutes."
+        ]
+      },
+      {
+        "role": "Software Engineer, Search",
+        "company": "Harbourline",
+        "location": "Toronto, Canada",
+        "date": "Jul 2021 -- Feb 2024",
+        "bullets": [
+          "Shipped the vector search path serving 12k queries per second at p99 under 80ms, designing the sharding scheme that let the index grow 6x without a rewrite.",
+          "Diagnosed a recall collapse that three teams had attributed to the model, and traced it to a tokenizer version skew between indexing and serving; added the version assertion that makes the failure impossible.",
+          "Halved index build time, 9 hours to 4, by moving embedding generation to a batched GPU pipeline with checkpointing.",
+          "Wrote the query understanding service in Go, replacing a Python prototype and reducing p99 CPU time per request by 64%."
+        ]
+      }
+    ],
+
+    "projects": [
+      {
+        "name": "tinyeval",
+        "stack": "Python, PyTorch",
+        "url": "https://github.com/jordanavery/tinyeval",
+        "url_label": "github.com/jordanavery/tinyeval",
+        "bullets": [
+          "An evaluation harness for retrieval systems that reports recall, latency and cost as one number per configuration, used by 40 teams inside two companies.",
+          "Runs the whole suite on CPU in under 3 minutes, because an evaluation nobody waits for is an evaluation nobody runs."
+        ]
+      },
+      {
+        "name": "shardlab",
+        "stack": "Rust, gRPC",
+        "url": "https://github.com/jordanavery/shardlab",
+        "url_label": "github.com/jordanavery/shardlab",
+        "bullets": [
+          "A simulator for vector index sharding strategies that predicts p99 latency within 8% of measured production, so a resharding decision can be argued from data rather than intuition."
+        ]
+      }
+    ],
+
+    "skills": [
+      { "category": "Languages", "items": "Python, Go, Rust, SQL" },
+      { "category": "Machine Learning", "items": "PyTorch, retrieval augmented generation, distillation, offline and online evaluation" },
+      { "category": "Infrastructure", "items": "AWS, Kubernetes, Terraform, Kafka, Postgres, Redis" },
+      { "category": "Practices", "items": "Distributed systems design, performance profiling, incident response, observability" }
+    ],
+
+    "education": [
+      {
+        "institution": "University of Toronto",
+        "location": "Toronto, Canada",
+        "degree": "MSc Computer Science, Machine Learning",
+        "date": "2021",
+        "detail": "Thesis on approximate nearest neighbour search under memory constraints."
+      },
+      {
+        "institution": "McGill University",
+        "location": "Montreal, Canada",
+        "degree": "BSc Computer Science",
+        "date": "2019",
+        "detail": ""
+      }
+    ],
+
+    "publications": [
+      {
+        "citation": "Avery, J., and Okafor, N. Cache aware re-ranking for low latency retrieval. SIGIR, 2025.",
+        "url": "https://doi.org/10.0000/example",
+        "url_label": "DOI"
+      }
+    ],
+
+    "certifications": [
+      { "category": "Cloud", "items": "AWS Solutions Architect Associate, 2023" }
+    ]
+  },
+
+  "cover_letter": {
+    "recipient": {
+      "name": "Priya Raman",
+      "company": "Meridian Labs",
+      "address": "Toronto, Canada",
+      "greeting": "Dear Ms Raman,"
+    },
+    "subject": "Application for Senior Machine Learning Engineer, REQ-4821",
+    "paragraphs": [
+      "I am applying for the Senior Machine Learning Engineer role. I build retrieval and inference systems, most recently a two stage retriever that took median answer latency on a 40M document assistant from 2.4 seconds to 610 milliseconds, and I would like to do that work on Meridian's document intelligence platform.",
+      "The problem closest to yours is the one I spent last year on. Our assistant was accurate and too slow to use, and every proposal on the table was a bigger model or a bigger cache. The actual cost was re-ranking every query against the full candidate set. Splitting retrieval into a cheap recall stage and a cached precision stage cut latency by three quarters and, because the second stage ran far less often, cut inference spend 38% at the same time. Your posting describes a latency budget that will not move and a corpus that keeps growing, which is the same shape.",
+      "I also care about the part that is harder to demonstrate in an interview. Before any of that shipped, I built the evaluation harness the team now gates releases on: 9,400 labelled cases across six task families. It caught three regressions that manual review had passed. I would rather ship slowly against a measurement I trust than quickly against a demo.",
+      "I would welcome the chance to talk about how you are evaluating retrieval quality today, and where the latency budget is being spent. Thank you for your time."
+    ]
+  }
+}

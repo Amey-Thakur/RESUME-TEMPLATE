@@ -151,10 +151,12 @@ documents with Tectonic, uploads the PDFs as artefacts for 90 days, and replaces
 the `latest` release with the new files.
 
 > [!NOTE]
-> While the name is still `[YOUR_FULL_NAME]`, the release publishes `resume.pdf`
-> and `cover_letter.pdf`. The candidate's name is only used in the filename once
-> it is a real one, so a fork never advertises a release for someone called
-> YOUR_FULL_NAME.
+> With no `resume_data.json` present, the build uses
+> [`resume_data.example.json`](resume/configuration/resume_data.example.json), a
+> worked example for an invented engineer. That is what the published release
+> contains, so the sample PDFs show what the template actually produces rather
+> than a page of bracketed placeholders. Your own `resume_data.json` takes
+> precedence the moment it exists, and it is gitignored.
 
 <br>
 
@@ -162,7 +164,7 @@ the `latest` release with the new files.
 
 | Path | What it holds |
 | :--- | :--- |
-| [resume/configuration/](resume/configuration/) | `resume_data.template.json`, the only file you edit |
+| [resume/configuration/](resume/configuration/) | [`resume_data.template.json`](resume/configuration/resume_data.template.json), the only file you edit, and [`resume_data.example.json`](resume/configuration/resume_data.example.json), a worked example |
 | [resume/templates/](resume/templates/) | [`base.sty`](resume/templates/base.sty) with the shared layout, plus a thin style for each document |
 | [resume/source/](resume/source/) | `resume.tex`, the entry point. The cover letter is generated |
 | [scripts/](scripts/) | [`generate_latex.py`](scripts/generate_latex.py), the pre-processor, and the two build wrappers |
