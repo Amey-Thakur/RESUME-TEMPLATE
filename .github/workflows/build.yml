@@ -40,7 +40,7 @@ jobs:
           tectonic resume/source/cover_letter.tex --outdir output
           # The naming rule lives in the pre-processor so the local scripts and
           # CI cannot disagree. It is empty while the name is a placeholder,
-          # which keeps the release from advertising YOUR_FULL_NAME.
+          # which keeps the release from advertising a placeholder name.
           STEM=$(python scripts/generate_latex.py --name)
           if [ -n "$STEM" ]; then
             mv output/resume.pdf output/"${STEM}_Resume.pdf"

@@ -16,7 +16,6 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import shutil
 import sys
 from pathlib import Path
 
@@ -302,7 +301,7 @@ def safe_name(data) -> str:
     Derived from the candidate's name, with anything that is awkward in a
     filename removed. While the name is still a placeholder the documents are
     published as plain 'Resume' and 'Cover_Letter' rather than advertising a
-    release for someone called YOUR_FULL_NAME.
+    release under a placeholder name.
     """
     name = str((data.get("personal_info") or {}).get("name", "")).strip()
     if not name or PLACEHOLDER.search(name):

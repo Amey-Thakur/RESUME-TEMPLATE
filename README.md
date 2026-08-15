@@ -22,9 +22,9 @@ a release.
 
 <br>
 
-[![Download the resume](https://img.shields.io/badge/Download-Resume-2563EB?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/Amey-Thakur/RESUME-TEMPLATE/releases/latest/download/resume.pdf)
-&nbsp;&nbsp;
-[![Download the cover letter](https://img.shields.io/badge/Download-Cover_Letter-2563EB?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://github.com/Amey-Thakur/RESUME-TEMPLATE/releases/latest/download/cover_letter.pdf)
+[![Download the resume](https://img.shields.io/badge/Download-Resume_PDF-2563EB)](https://github.com/Amey-Thakur/RESUME-TEMPLATE/releases/latest/download/resume.pdf)
+&nbsp;
+[![Download the cover letter](https://img.shields.io/badge/Download-Cover_Letter_PDF-2563EB)](https://github.com/Amey-Thakur/RESUME-TEMPLATE/releases/latest/download/cover_letter.pdf)
 
 <br>
 
@@ -86,7 +86,7 @@ details never reach a public repository.
 cp resume/configuration/resume_data.template.json resume/configuration/resume_data.json
 ```
 
-Every field is a bracketed placeholder such as `[YOUR_FULL_NAME]`. Replace them
+Every field is a bracketed placeholder such as `[FULL_NAME]`. Replace them
 all, then check nothing was missed:
 
 ```bash
@@ -114,7 +114,7 @@ directions in an `_instructions` block that the pre-processor ignores.
 
 1. Read `resume/configuration/resume_data.template.json`.
 2. Replace every `[BRACKETED_PLACEHOLDER]` with real content. Follow the
-   `bullet_formula` in `_instructions`.
+   the `bullets` rule in `_instructions`.
 3. Delete any section you cannot fill honestly, and remove its name from
    `section_order`.
 4. Write the result to `resume/configuration/resume_data.json`.
