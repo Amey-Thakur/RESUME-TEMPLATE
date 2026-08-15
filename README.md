@@ -122,13 +122,13 @@ omission, and the PDF filename. There is nothing else to decide.
 
 ## Set it up
 
-From nothing to a compiled PDF. Every block below is one command, so you can
-copy each in turn.
+From nothing to a compiled PDF. Every block is one command, so each is a single
+copy. Where macOS, Linux and Windows differ, both are given.
 
 ### 1. Get the files
 
 Press **Use this template** at the top of this page for your own copy, or clone
-this one:
+this one. Identical on every platform.
 
 ```bash
 git clone https://github.com/Amey-Thakur/RESUME-TEMPLATE.git
@@ -140,23 +140,43 @@ cd RESUME-TEMPLATE
 
 ### 2. Check Python
 
-Version 3.8 or newer. Nothing needs installing beyond the interpreter, because
-the pre-processor uses only the standard library.
+Version 3.8 or newer. Nothing else needs installing, because the pre-processor
+uses only the standard library.
+
+**macOS and Linux**
 
 ```bash
-python --version
+python3 --version
 ```
 
-If that is missing, take it from [python.org](https://www.python.org/downloads/).
+**Windows (PowerShell)**
+
+```powershell
+py --version
+```
+
+If it is missing, take it from [python.org](https://www.python.org/downloads/).
+On Windows, tick **Add python.exe to PATH** in the installer.
 
 ### 3. Install Tectonic
 
-Tectonic is the compiler. It is a single binary and it fetches the TeX packages
-it needs by itself, so there is no TeX Live to install.
+Tectonic is the compiler. It is a single binary that fetches the TeX packages it
+needs by itself, so there is no TeX Live to install.
+
+**macOS and Linux**, with Homebrew:
 
 ```bash
 brew install tectonic
 ```
+
+**Windows (PowerShell)**, the official installer, which drops the binary in the
+current directory:
+
+```powershell
+iex ((New-Object System.Net.WebClient).DownloadString('https://drop-ps1.fullyjustified.net'))
+```
+
+**Any platform**, if you already use Conda or Rust:
 
 ```bash
 conda install -c conda-forge tectonic
@@ -166,9 +186,10 @@ conda install -c conda-forge tectonic
 cargo install tectonic
 ```
 
-Any one of those. On Windows without a package manager, take the binary from
+Prebuilt binaries for every platform are on
 [the releases page](https://github.com/tectonic-typesetting/tectonic/releases)
-and put it on your `PATH`. Check it:
+if you would rather unpack one yourself and put it on your `PATH`. Then check
+it, the same command everywhere:
 
 ```bash
 tectonic --version
@@ -176,9 +197,13 @@ tectonic --version
 
 ### 4. Make your own data file
 
+**macOS and Linux**
+
 ```bash
 cp resume/configuration/resume_data.template.json resume/configuration/resume_data.json
 ```
+
+**Windows (PowerShell)**
 
 ```powershell
 Copy-Item resume/configuration/resume_data.template.json resume/configuration/resume_data.json
@@ -196,15 +221,27 @@ write the bullets and how to drop a section you do not need.
 
 Exits non-zero and lists what is left while any placeholder remains.
 
+**macOS and Linux**
+
 ```bash
-python scripts/generate_latex.py --check
+python3 scripts/generate_latex.py --check
+```
+
+**Windows (PowerShell)**
+
+```powershell
+py scripts/generate_latex.py --check
 ```
 
 ### 7. Build
 
+**macOS and Linux**
+
 ```bash
 ./scripts/build.sh
 ```
+
+**Windows (PowerShell)**
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/build.ps1
@@ -223,18 +260,26 @@ ls output
 Only step 3 and the first build need a network. Tectonic caches every package
 it downloads, so once one build has finished the whole pipeline runs with no
 connection. To prove it, and to make a missing package an error rather than a
-silent download:
+silent download, run this. The same command everywhere:
 
 ```bash
 tectonic --only-cached resume/source/resume.tex --outdir output
 ```
 
 > [!TIP]
-> Regenerating the LaTeX without compiling is useful when you are editing the
+> Regenerating the LaTeX without compiling is useful while you are editing the
 > JSON and want to see what it produces.
 >
+> **macOS and Linux**
+>
 > ```bash
-> python scripts/generate_latex.py
+> python3 scripts/generate_latex.py
+> ```
+>
+> **Windows (PowerShell)**
+>
+> ```powershell
+> py scripts/generate_latex.py
 > ```
 
 <br>
