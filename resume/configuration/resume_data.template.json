@@ -1,92 +1,93 @@
 {
   "_instructions": {
-    "purpose": "Every placeholder in square brackets must be replaced with real content. Nothing else in this file needs to change.",
-    "bullet_formula": "Accomplished [X] as measured by [Y] by doing [Z]. Lead with the outcome, name the number, then the method. A bullet with no number is a duty, not an achievement.",
-    "length": "One page for under ten years of experience. Two at most. Cut the oldest role before you cut a number.",
-    "omit_freely": "Delete any section you cannot fill honestly. Remove its name from section_order and the heading will not appear. An absent section reads better than a thin one.",
-    "section_order": "Put the strongest evidence first. Experience first once you have industry experience; projects or education first before that.",
-    "separators": "Write a plain | between items. The pre-processor typesets it. Do not write LaTeX here."
+    "how_to_use": "Copy this file to resume_data.json and replace every [PLACEHOLDER]. Nothing else needs to change. Your copy is gitignored.",
+    "bullets": "Write each bullet as: accomplished X, as measured by Y, by doing Z. Lead with the outcome, name the number, then the method. A bullet with no number describes a job description rather than your work.",
+    "length": "One page for under ten years of experience. Cut the oldest role before you cut a number.",
+    "sections": "section_order decides which sections appear and in what order. Remove a name from it and that section does not exist in the PDF. Delete any section you cannot fill honestly.",
+    "ordering": "Experience first once you have industry experience. Projects or education first before that.",
+    "separators": "Write a plain | between items. The pre-processor typesets it. Never write LaTeX in this file.",
+    "summary": "Optional. Strong experience speaks for itself, so summary is left out of section_order by default. Add it back if you are changing field and need to explain the move."
   },
 
   "personal_info": {
-    "name": "[YOUR_FULL_NAME]",
-    "title": "[YOUR_TARGET_TITLE_FOR_EXAMPLE_SOFTWARE_ENGINEER_OR_AI_ENGINEER]",
-    "phone": "[YOUR_PHONE_NUMBER]",
-    "email": "[YOUR_EMAIL_ADDRESS]",
-    "location": "[YOUR_CITY_COUNTRY]",
+    "name": "[FULL_NAME]",
+    "title": "[TARGET_TITLE]",
+    "phone": "[PHONE]",
+    "email": "[EMAIL]",
+    "location": "[CITY_COUNTRY]",
     "links": [
-      { "label": "linkedin.com/in/[YOUR_LINKEDIN_USERNAME]", "url": "https://linkedin.com/in/[YOUR_LINKEDIN_USERNAME]" },
-      { "label": "github.com/[YOUR_GITHUB_USERNAME]", "url": "https://github.com/[YOUR_GITHUB_USERNAME]" },
-      { "label": "[YOUR_PORTFOLIO_DOMAIN]", "url": "https://[YOUR_PORTFOLIO_DOMAIN]" }
+      { "label": "linkedin.com/in/[LINKEDIN]", "url": "https://linkedin.com/in/[LINKEDIN]" },
+      { "label": "github.com/[GITHUB]", "url": "https://github.com/[GITHUB]" },
+      { "label": "[WEBSITE]", "url": "https://[WEBSITE]" }
     ]
   },
 
   "resume": {
-    "section_order": ["summary", "experience", "projects", "skills", "education"],
+    "section_order": ["experience", "projects", "skills", "education"],
 
-    "summary": "[ONE_OR_TWO_SENTENCES_NAMING_YOUR_SPECIALISM_YOUR_STRONGEST_EVIDENCE_AND_THE_ROLE_YOU_WANT_DELETE_THIS_SECTION_IF_YOUR_EXPERIENCE_SPEAKS_FOR_ITSELF]",
+    "summary": "[ONE_LINE: specialism, strongest evidence, role wanted]",
 
     "experience": [
       {
-        "role": "[YOUR_ROLE_TITLE]",
-        "company": "[COMPANY_NAME]",
+        "role": "[ROLE_TITLE]",
+        "company": "[COMPANY]",
         "location": "[CITY_COUNTRY]",
-        "date": "[MONTH_YEAR] -- Present",
+        "date": "[MON_YEAR] -- Present",
         "bullets": [
-          "[SHIPPED_WHAT] serving [SCALE_FOR_EXAMPLE_REQUESTS_PER_SECOND_OR_USERS], cutting [METRIC] from [BEFORE] to [AFTER] by [TECHNICAL_APPROACH].",
-          "[DESIGNED_OR_LED_WHAT] across [NUMBER] services in [LANGUAGE_OR_STACK], reducing [COST_LATENCY_OR_ERROR_RATE] by [PERCENTAGE].",
-          "[DIAGNOSED_WHAT_PROBLEM] that [CONSEQUENCE], and fixed it by [ROOT_CAUSE_FIX], preventing [RECURRENCE_OR_SAVING].",
-          "[MENTORED_OR_INFLUENCED_WHOM] on [PRACTICE], which [MEASURABLE_TEAM_OUTCOME]."
+          "[SHIPPED_WHAT] serving [SCALE], cutting [METRIC] from [BEFORE] to [AFTER] by [APPROACH].",
+          "[DESIGNED_WHAT] across [N] services, reducing [COST_OR_LATENCY] by [PERCENT].",
+          "[DIAGNOSED_WHAT] causing [IMPACT], and fixed it by [ROOT_CAUSE_FIX].",
+          "[LED_OR_MENTORED_WHAT], which [TEAM_OUTCOME]."
         ]
       },
       {
-        "role": "[EARLIER_ROLE_TITLE]",
-        "company": "[EARLIER_COMPANY_NAME]",
+        "role": "[ROLE_TITLE]",
+        "company": "[COMPANY]",
         "location": "[CITY_COUNTRY]",
-        "date": "[MONTH_YEAR] -- [MONTH_YEAR]",
+        "date": "[MON_YEAR] -- [MON_YEAR]",
         "bullets": [
-          "[BUILT_WHAT] in [LANGUAGE], which [OUTCOME_WITH_A_NUMBER].",
-          "[AUTOMATED_OR_MIGRATED_WHAT], removing [MANUAL_HOURS_OR_COST] per [PERIOD]."
+          "[BUILT_WHAT] in [LANGUAGE], which [OUTCOME_WITH_NUMBER].",
+          "[AUTOMATED_WHAT], removing [HOURS_OR_COST] per [PERIOD]."
         ]
       }
     ],
 
     "projects": [
       {
-        "name": "[PROJECT_NAME]",
-        "stack": "[TWO_TO_FOUR_TECHNOLOGIES_SEPARATED_BY_COMMAS]",
-        "url": "https://github.com/[YOUR_GITHUB_USERNAME]/[REPOSITORY]",
-        "url_label": "github.com/[YOUR_GITHUB_USERNAME]/[REPOSITORY]",
+        "name": "[PROJECT]",
+        "stack": "[TECH], [TECH], [TECH]",
+        "url": "https://github.com/[GITHUB]/[REPO]",
+        "url_label": "github.com/[GITHUB]/[REPO]",
         "bullets": [
-          "[WHAT_IT_DOES_AND_THE_HARD_PART], measured by [BENCHMARK_STARS_USERS_OR_ACCURACY].",
-          "[THE_ENGINEERING_DECISION_YOU_WOULD_DEFEND_IN_AN_INTERVIEW_AND_WHY]."
+          "[WHAT_IT_DOES] and [THE_HARD_PART], measured by [BENCHMARK].",
+          "[DECISION_YOU_WOULD_DEFEND] and [WHY]."
         ]
       },
       {
-        "name": "[SECOND_PROJECT_NAME]",
-        "stack": "[TECHNOLOGIES]",
-        "url": "https://github.com/[YOUR_GITHUB_USERNAME]/[REPOSITORY]",
-        "url_label": "github.com/[YOUR_GITHUB_USERNAME]/[REPOSITORY]",
+        "name": "[PROJECT]",
+        "stack": "[TECH], [TECH]",
+        "url": "https://github.com/[GITHUB]/[REPO]",
+        "url_label": "github.com/[GITHUB]/[REPO]",
         "bullets": [
-          "[WHAT_IT_DOES_AND_THE_RESULT_WITH_A_NUMBER]."
+          "[WHAT_IT_DOES] and [RESULT_WITH_NUMBER]."
         ]
       }
     ],
 
     "skills": [
-      { "category": "Languages", "items": "[PRIMARY_LANGUAGE], [SECOND_LANGUAGE], [THIRD_LANGUAGE], SQL" },
-      { "category": "Machine Learning", "items": "[FRAMEWORKS_FOR_EXAMPLE_PYTORCH_JAX], [TECHNIQUES_FOR_EXAMPLE_RAG_FINE_TUNING_EVALUATION]" },
-      { "category": "Infrastructure", "items": "[CLOUD_PROVIDER], [CONTAINERS_OR_ORCHESTRATION], [CI_SYSTEM], [DATASTORES]" },
-      { "category": "Practices", "items": "[FOR_EXAMPLE_DISTRIBUTED_SYSTEMS_DESIGN], [TESTING_APPROACH], [OBSERVABILITY_OR_PERFORMANCE_WORK]" }
+      { "category": "Languages", "items": "[LANGUAGE], [LANGUAGE], [LANGUAGE], SQL" },
+      { "category": "Machine Learning", "items": "[FRAMEWORK], [FRAMEWORK], [TECHNIQUE], [TECHNIQUE]" },
+      { "category": "Infrastructure", "items": "[CLOUD], [ORCHESTRATION], [CI], [DATASTORE]" },
+      { "category": "Practices", "items": "[PRACTICE], [PRACTICE], [PRACTICE]" }
     ],
 
     "education": [
       {
-        "institution": "[UNIVERSITY_NAME]",
+        "institution": "[UNIVERSITY]",
         "location": "[CITY_COUNTRY]",
-        "degree": "[DEGREE_AND_FIELD]",
-        "date": "[MONTH_YEAR]",
-        "detail": "[OPTIONAL_ONE_LINE_FOR_A_THESIS_AWARD_OR_RELEVANT_COURSEWORK_DELETE_IF_UNREMARKABLE]"
+        "degree": "[DEGREE], [FIELD]",
+        "date": "[YEAR]",
+        "detail": "[THESIS_AWARD_OR_COURSEWORK, or delete this line]"
       }
     ],
 
@@ -99,24 +100,23 @@
     ],
 
     "certifications": [
-      { "category": "Cloud", "items": "[CERTIFICATION_NAME], [ISSUER], [YEAR]" },
-      { "category": "Machine Learning", "items": "[CERTIFICATION_NAME], [ISSUER], [YEAR]" }
+      { "category": "[AREA]", "items": "[CERTIFICATION], [ISSUER], [YEAR]" }
     ]
   },
 
   "cover_letter": {
     "recipient": {
-      "name": "[HIRING_MANAGER_NAME_OR_LEAVE_EMPTY]",
-      "company": "[COMPANY_NAME]",
-      "address": "[COMPANY_CITY_COUNTRY]",
-      "greeting": "Dear [HIRING_MANAGER_SURNAME_OR_HIRING_TEAM],"
+      "name": "[HIRING_MANAGER, or leave empty]",
+      "company": "[COMPANY]",
+      "address": "[CITY_COUNTRY]",
+      "greeting": "Dear [SURNAME, or Hiring Team],"
     },
-    "subject": "Application for [ROLE_TITLE], [REQUISITION_ID]",
+    "subject": "Application for [ROLE_TITLE], [REQ_ID]",
     "paragraphs": [
-      "I am applying for the [ROLE_TITLE] role. I work on [YOUR_SPECIALISM], most recently [ONE_CONCRETE_THING_YOU_SHIPPED_AND_WHAT_IT_DID], and I want to do that on [SPECIFIC_TEAM_PRODUCT_OR_PROBLEM_AT_THIS_COMPANY].",
-      "The work closest to yours is [PROJECT_OR_SYSTEM]. [WHAT_THE_HARD_PART_WAS_IN_ONE_SENTENCE]. [WHAT_YOU_DID_ABOUT_IT_AND_THE_MEASURED_RESULT]. [WHY_THAT_PROBLEM_RESEMBLES_THEIRS].",
-      "[A_SECOND_PIECE_OF_EVIDENCE_THAT_SHOWS_A_DIFFERENT_STRENGTH_FOR_EXAMPLE_OWNERSHIP_DEBUGGING_OR_WORKING_ACROSS_TEAMS_WITH_THE_OUTCOME_IT_PRODUCED].",
-      "I would welcome the chance to talk about [SPECIFIC_PROBLEM_THE_TEAM_IS_WORKING_ON]. Thank you for your time."
+      "I am applying for the [ROLE_TITLE] role. I work on [SPECIALISM], most recently [WHAT_YOU_SHIPPED] which [WHAT_IT_DID], and I would like to do that on [THEIR_TEAM_OR_PROBLEM].",
+      "The work closest to yours is [PROJECT]. [THE_HARD_PART_IN_ONE_SENTENCE]. [WHAT_YOU_DID] and [THE_MEASURED_RESULT]. [WHY_IT_RESEMBLES_THEIRS].",
+      "[SECOND_EVIDENCE_OF_A_DIFFERENT_STRENGTH] and [THE_OUTCOME_IT_PRODUCED].",
+      "I would welcome the chance to talk about [SPECIFIC_PROBLEM_THEY_HAVE]. Thank you for your time."
     ]
   }
 }

@@ -26,7 +26,6 @@ SECTIONS = ROOT / "resume" / "sections"
 SOURCE = ROOT / "resume" / "source"
 
 DATA_FILE = CONFIG / "resume_data.json"
-EXAMPLE_FILE = CONFIG / "resume_data.example.json"
 TEMPLATE_FILE = CONFIG / "resume_data.template.json"
 
 PLACEHOLDER = re.compile(r"\[[A-Z0-9_]+\]")
@@ -320,14 +319,12 @@ def main() -> int:
                     help="print the filename stem for the built PDFs and exit")
     args = ap.parse_args()
 
-    # Your own data wins. Without it, build the worked example, so a fresh
-    # clone and the published release show what the template actually produces
-    # rather than a page of bracketed placeholders.
-    source = DATA_FILE if DATA_FILE.exists() else EXAMPLE_FILE
-    if not source.exists():
-        source = TEMPLATE_FILE
+    # Your own data wins. Without it the template is built, so a fresh clone
+    # and the published release show the structure with its placeholders
+    # visible, which is what a template should show.
+    source = DATA_FILE if DATA_FILE.exists() else TEMPLATE_FILE
     if source is not DATA_FILE and not args.name:
-        print(f"No {DATA_FILE.name}, building {source.name} instead.")
+        print(f"No {DATA_FILE.name}, building {source.name}.")
 
     raw = source.read_text(encoding="utf-8")
     try:
