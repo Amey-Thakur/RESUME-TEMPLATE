@@ -268,7 +268,10 @@ def build_cover_letter(data, name_cmd="\\myName") -> str:
         "\\makeHeader",
         "",
         "\\vspace{10pt}",
-        "\\today",
+        # \today resolves when the document is compiled, so the letter always
+        # carries the date it was built rather than a date typed in once and
+        # forgotten. Set cover_letter.date in the JSON to pin a specific one.
+        (tex(cl["date"]) if str(cl.get("date", "")).strip() else "\\today"),
         "",
         "\\letterRecipient{%s}{%s}{%s}" % (
             tex(rec.get("name")), tex(rec.get("company")), tex(rec.get("address"))),

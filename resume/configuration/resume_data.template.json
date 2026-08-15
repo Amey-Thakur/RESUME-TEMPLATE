@@ -6,6 +6,7 @@
     "sections": "section_order decides which sections appear and in what order. Remove a name from it and that section does not exist in the PDF. Delete any section you cannot fill honestly.",
     "ordering": "Experience first once you have industry experience. Projects or education first before that.",
     "separators": "Write a plain | between items. The pre-processor typesets it. Never write LaTeX in this file.",
+    "cover_letter_date": "Leave cover_letter.date empty and the letter carries the date it was compiled. Rebuild before you send it. Set a value only if you need to pin a specific date.",
     "summary": "Optional. Strong experience speaks for itself, so summary is left out of section_order by default. Add it back if you are changing field and need to explain the move."
   },
 
@@ -111,6 +112,7 @@
       "address": "[CITY_COUNTRY]",
       "greeting": "Dear [SURNAME, or Hiring Team],"
     },
+    "date": "",
     "subject": "Application for [ROLE_TITLE], [REQ_ID]",
     "paragraphs": [
       "I am applying for the [ROLE_TITLE] role. I work on [SPECIALISM], most recently [WHAT_YOU_SHIPPED] which [WHAT_IT_DID], and I would like to do that on [THEIR_TEAM_OR_PROBLEM].",
