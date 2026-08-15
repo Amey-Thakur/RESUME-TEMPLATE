@@ -18,7 +18,7 @@
   },
 
   "resume": {
-    "section_order": ["summary", "experience", "projects", "skills", "education", "publications"],
+    "section_order": ["experience", "projects", "skills", "education", "publications"],
 
     "summary": "Machine learning engineer with five years building retrieval and inference systems in production. Strongest on the unglamorous half: evaluation, latency and cost.",
 
@@ -32,8 +32,7 @@
           "Rebuilt the retrieval layer behind a 40M document assistant, cutting median answer latency from 2.4s to 610ms by replacing per query re-ranking with a cached two stage retriever.",
           "Cut inference spend 38% year on year, roughly 1.2M USD, by routing 71% of traffic to a distilled 3B model and holding the large model for queries an online classifier marked as hard.",
           "Built the offline evaluation harness the team now gates releases on, 9,400 labelled cases across 6 task families, which caught 3 regressions that manual review had already passed.",
-          "Led the migration of 14 services from bespoke prompt templates to a shared, versioned schema, ending a class of production incidents caused by silent template drift.",
-          "Mentored 4 engineers through their first on call rotation, and wrote the runbook that reduced mean time to mitigation from 47 to 12 minutes."
+          "Led the migration of 14 services onto a shared, versioned prompt schema, ending a class of production incidents caused by silent template drift, and mentored 4 engineers through their first on call rotation."
         ]
       },
       {
@@ -44,8 +43,7 @@
         "bullets": [
           "Shipped the vector search path serving 12k queries per second at p99 under 80ms, designing the sharding scheme that let the index grow 6x without a rewrite.",
           "Diagnosed a recall collapse that three teams had attributed to the model, and traced it to a tokenizer version skew between indexing and serving; added the version assertion that makes the failure impossible.",
-          "Halved index build time, 9 hours to 4, by moving embedding generation to a batched GPU pipeline with checkpointing.",
-          "Wrote the query understanding service in Go, replacing a Python prototype and reducing p99 CPU time per request by 64%."
+          "Halved index build time, 9 hours to 4, by moving embedding generation to a batched GPU pipeline with checkpointing, and rewrote the query understanding service in Go for a 64% cut in p99 CPU time per request."
         ]
       }
     ],

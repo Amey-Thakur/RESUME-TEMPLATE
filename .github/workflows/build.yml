@@ -20,7 +20,7 @@ jobs:
     steps:
       # 1. Checkout the repository code
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # 2. Setup the self-contained Tectonic compiler
       - name: Setup Tectonic
@@ -49,7 +49,7 @@ jobs:
 
       # 5. Upload compiled PDFs as build artifacts
       - name: Upload PDF artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Resume-PDFs
           path: output/*.pdf
