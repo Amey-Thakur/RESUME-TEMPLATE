@@ -28,10 +28,11 @@ a release.
 
 <br>
 
+[![License](https://img.shields.io/badge/License-MIT-lightgrey)](LICENSE)
 [![Build](https://github.com/Amey-Thakur/RESUME-TEMPLATE/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/Amey-Thakur/RESUME-TEMPLATE/actions/workflows/build.yml)
 [![Technology](https://img.shields.io/badge/Technology-LaTeX_%7C_Python-8250DF)](https://tectonic-typesetting.github.io)
 [![Type](https://img.shields.io/badge/Type-Template-546E7A)](https://github.com/Amey-Thakur/RESUME-TEMPLATE/generate)
-[![License](https://img.shields.io/badge/License-MIT-lightgrey)](LICENSE)
+[![Developed by](https://img.shields.io/badge/Developed_by-Amey_Thakur-0969DA)](https://github.com/Amey-Thakur)
 
 <br>
 
