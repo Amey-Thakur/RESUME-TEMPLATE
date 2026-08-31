@@ -37,6 +37,7 @@ jobs:
         run: |
           mkdir -p output
           tectonic resume/source/resume.tex --outdir output
+          tectonic resume/source/resume_jake.tex --outdir output
           tectonic resume/source/cover_letter.tex --outdir output
           # The naming rule lives in the pre-processor so the local scripts and
           # CI cannot disagree. It is empty while the name is a placeholder,
@@ -44,10 +45,26 @@ jobs:
           STEM=$(python scripts/generate_latex.py --name)
           if [ -n "$STEM" ]; then
             mv output/resume.pdf output/"${STEM}_Resume.pdf"
+            mv output/resume_jake.pdf output/"${STEM}_Resume_Compact.pdf"
             mv output/cover_letter.pdf output/"${STEM}_Cover_Letter.pdf"
           fi
 
-      # 5. Upload compiled PDFs as build artifacts
+      # 5. Fail the build if any document runs past one page
+      - name: Assert every document is exactly one page
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+          fail=0
+          for f in output/*.pdf; do
+            n=$(pdfinfo "$f" | awk '/^Pages:/ {print $2}')
+            printf '%-48s %s page(s)\n' "$(basename "$f")" "$n"
+            [ "$n" = "1" ] || fail=1
+          done
+          if [ "$fail" != "0" ]; then
+            echo "::error::At least one document is not exactly one page. Cut content rather than shrinking the type."
+            exit 1
+          fi
+
+      # 6. Upload compiled PDFs as build artifacts
       - name: Upload PDF artifacts
         uses: actions/upload-artifact@v5
         with:
@@ -55,7 +72,7 @@ jobs:
           path: output/*.pdf
           retention-days: 90
 
-      # 6. Delete previous GitHub Release and tag named 'latest'
+      # 7. Delete previous GitHub Release and tag named 'latest'
       - name: Delete old release and tag
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: gh release delete latest --yes --cleanup-tag
@@ -63,7 +80,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
 
-      # 7. Create or update the 'latest' release with the newly built PDFs
+      # 8. Create or update the 'latest' release with the newly built PDFs
       - name: Create GitHub Release with PDFs
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: softprops/action-gh-release@v2
@@ -71,8 +88,11 @@ jobs:
           tag_name: latest
           name: "Latest Resume"
           body: |
-            Auto-generated resume and cover letter PDFs from the latest `main` branch commit.
-            Built from LaTeX source using the Tectonic typesetting engine.
+            Auto-generated PDFs from the latest `main` branch commit, built with Tectonic.
+
+            Two resume layouts from the same `resume_data.json`: the default, and the
+            dense single-column `_Compact` version. Every document is checked to be
+            exactly one page before release.
           files: |
             output/*.pdf
           make_latest: true
