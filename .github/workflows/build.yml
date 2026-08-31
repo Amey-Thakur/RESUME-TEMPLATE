@@ -37,7 +37,6 @@ jobs:
         run: |
           mkdir -p output
           tectonic resume/source/resume.tex --outdir output
-          tectonic resume/source/resume_jake.tex --outdir output
           tectonic resume/source/cover_letter.tex --outdir output
           # The naming rule lives in the pre-processor so the local scripts and
           # CI cannot disagree. It is empty while the name is a placeholder,
@@ -45,7 +44,6 @@ jobs:
           STEM=$(python scripts/generate_latex.py --name)
           if [ -n "$STEM" ]; then
             mv output/resume.pdf output/"${STEM}_Resume.pdf"
-            mv output/resume_jake.pdf output/"${STEM}_Resume_Compact.pdf"
             mv output/cover_letter.pdf output/"${STEM}_Cover_Letter.pdf"
           fi
 
@@ -90,9 +88,8 @@ jobs:
           body: |
             Auto-generated PDFs from the latest `main` branch commit, built with Tectonic.
 
-            Two resume layouts from the same `resume_data.json`: the default, and the
-            dense single-column `_Compact` version. Every document is checked to be
-            exactly one page before release.
+            One page each, in the dense single-column format r/EngineeringResumes
+            recommends. The page count is asserted before release.
           files: |
             output/*.pdf
           make_latest: true

@@ -31,14 +31,12 @@ fi
 
 echo "Compiling with $TECTONIC"
 "$TECTONIC" resume/source/resume.tex --outdir "$OUTPUT_DIR"
-"$TECTONIC" resume/source/resume_jake.tex --outdir "$OUTPUT_DIR"
 "$TECTONIC" resume/source/cover_letter.tex --outdir "$OUTPUT_DIR"
 
 # One implementation of the naming rule, shared with CI.
 STEM="$("$PYTHON" scripts/generate_latex.py --name)"
 if [ -n "$STEM" ]; then
   mv "$OUTPUT_DIR/resume.pdf" "$OUTPUT_DIR/${STEM}_Resume.pdf"
-  mv "$OUTPUT_DIR/resume_jake.pdf" "$OUTPUT_DIR/${STEM}_Resume_Compact.pdf"
   mv "$OUTPUT_DIR/cover_letter.pdf" "$OUTPUT_DIR/${STEM}_Cover_Letter.pdf"
 fi
 

@@ -2,18 +2,120 @@
 % resume.sty
 % The resume document. Everything shared with the cover letter lives in
 % base.sty; only what is specific to a resume belongs here.
+%
+% The layout is the dense single-column format that r/EngineeringResumes treats
+% as its default recommendation, popularised by Jake Gutierrez's LaTeX
+% template. It is the safest choice for engineering applications: one column,
+% no graphics, standard section names, and a text layer that parses cleanly
+% through an applicant tracking system.
+%
+% base.sty is written for an airier document, so this package overrides the
+% five things that make the format dense, and nothing else:
+%
+%   Margins        A wider text block, 0.5in each side. Most of the extra
+%                  capacity comes from here rather than from the type size.
+%   Leading        Back to single. base.sty adds four percent.
+%   Headings       The rule sits immediately under the heading, tight.
+%   Lists          Tighter throughout.
+%   Header         Name, contact line, links. No tagline: in this layout the
+%                  space belongs to evidence, and a tagline repeats what the
+%                  first role already says.
+%
+% Every entry macro keeps the name and the argument order base.sty gives it.
+% That is the contract the pre-processor writes against; only the visual
+% parameters change here.
 %-------------------------------------------------------------------------
-\ProvidesPackage{resume}[2026/08/15 Resume document style]
+\ProvidesPackage{resume}[2026/08/31 Resume document style]
 
 % Loaded by relative path because the document is compiled from resume/source
 % and these packages are not installed in the TeX tree.
 \RequirePackage{../templates/base}
 
-% A resume is read in one pass and should not break a role across pages when
-% it can be avoided.
+%---------- Page ----------------------------------------------------------
+\geometry{
+  letterpaper,
+  top=0.45in,
+  bottom=0.45in,
+  left=0.5in,
+  right=0.5in,
+  footskip=0.2in
+}
+
+%---------- Vertical rhythm ----------------------------------------------
+\linespread{1.0}\selectfont
+
+% A resume is read in one pass and should not break a role across pages. A
+% heading stranded at the foot of the page is the most common way this layout
+% goes wrong once it is full.
 \widowpenalty=10000
 \clubpenalty=10000
 
-% A little extra leading. A resume is skimmed, and lines set tight are the
-% first thing a reader gives up on.
-\linespread{1.04}\selectfont
+%---------- Section headings ---------------------------------------------
+% Spacing is declared through titlesec rather than corrected with negative
+% \vspace, for the reason base.sty gives: a negative correction that looks
+% right at one size collides at another, and this is the layout people push
+% until it is full.
+\titleformat{\section}
+  {\normalfont\large\scshape\raggedright}
+  {}{0em}
+  {}
+  [{\vspace{2pt}\hrule height 0.6pt}]
+
+\titlespacing*{\section}{0pt}{9pt}{5pt}
+
+%---------- Lists ---------------------------------------------------------
+\setlist[entries]{
+  label={},
+  leftmargin=0pt,
+  topsep=2pt,
+  parsep=0pt,
+  partopsep=0pt,
+  itemsep=5pt
+}
+
+\setlist[bullets]{
+  label=\textbullet,
+  leftmargin=0.15in,
+  topsep=1pt,
+  parsep=0pt,
+  partopsep=0pt,
+  itemsep=1pt,
+  rightmargin=0pt
+}
+
+\setlist[labelled]{
+  label={},
+  leftmargin=0pt,
+  topsep=1pt,
+  parsep=0pt,
+  partopsep=0pt,
+  itemsep=1.5pt
+}
+
+%---------- Header --------------------------------------------------------
+\renewcommand{\makeHeader}{%
+  \begin{center}
+    {\Huge\scshape\myName}\\[2pt]
+    {\small\myContactLine}\\[1pt]
+    {\small\myLinkLine}
+  \end{center}
+  \vspace{2pt}
+}
+
+%---------- Entry rows ----------------------------------------------------
+\renewcommand{\entryTwoLine}[4]{%
+  \item
+  \begin{tabularx}{\linewidth}{@{}X@{\hspace{\entryGutter}}r@{}}
+    \textbf{#1} & #2 \\
+    \textit{\small #3} & \textit{\small #4} \\
+  \end{tabularx}%
+  \vspace{1pt}
+}
+
+\renewcommand{\entryOneLine}[2]{%
+  \item
+  \begin{tabularx}{\linewidth}{@{}X@{\hspace{\entryGutter}}r@{}}
+    #1 & #2 \\
+  \end{tabularx}%
+  \vspace{1pt}
+}

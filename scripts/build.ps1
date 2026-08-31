@@ -33,8 +33,6 @@ if (-not (Get-Command "tectonic" -ErrorAction SilentlyContinue)) {
 Write-Host "Compiling with $Tectonic"
 & $Tectonic resume/source/resume.tex --outdir $OutputDir
 if ($LASTEXITCODE -ne 0) { Write-Error "The resume failed to compile." }
-& $Tectonic resume/source/resume_jake.tex --outdir $OutputDir
-if ($LASTEXITCODE -ne 0) { Write-Error "The compact resume failed to compile." }
 & $Tectonic resume/source/cover_letter.tex --outdir $OutputDir
 if ($LASTEXITCODE -ne 0) { Write-Error "The cover letter failed to compile." }
 
@@ -42,7 +40,6 @@ if ($LASTEXITCODE -ne 0) { Write-Error "The cover letter failed to compile." }
 $Stem = (& $Python scripts/generate_latex.py --name).Trim()
 if ($Stem) {
     Move-Item -Force (Join-Path $OutputDir "resume.pdf")       (Join-Path $OutputDir "$($Stem)_Resume.pdf")
-    Move-Item -Force (Join-Path $OutputDir "resume_jake.pdf")  (Join-Path $OutputDir "$($Stem)_Resume_Compact.pdf")
     Move-Item -Force (Join-Path $OutputDir "cover_letter.pdf") (Join-Path $OutputDir "$($Stem)_Cover_Letter.pdf")
 }
 

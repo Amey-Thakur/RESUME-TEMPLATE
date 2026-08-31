@@ -75,38 +75,31 @@ tracking system reads.
 **One pre-processor, not two.** The shell script, the PowerShell script and CI
 all call the same Python file, so the escaping rules cannot drift apart.
 
-**Two layouts, one set of facts.** Both resume styles read the same
-`resume_data.json` and the same generated sections, so they cannot disagree
-about a date or a bullet. Pick whichever suits the application, or build both
-and choose from the output folder.
-
 <br>
 
-## Two resume layouts
+## The format
 
-| Layout | Source | Built as | Use it when |
-| :--- | :--- | :--- | :--- |
-| **Default** | [`resume.tex`](resume/source/resume.tex) | `*_Resume.pdf` | The page is not full. 11pt, generous margins, a little extra leading. Easier to read, and it can carry a tagline |
-| **Compact** | [`resume_jake.tex`](resume/source/resume_jake.tex) | `*_Resume_Compact.pdf` | The page is full. 10pt, a wider text block and tighter lists, which is roughly a third more content on the same page |
-
-The compact layout is the dense single-column format that
+One page, one column, no graphics. This is the dense single-column layout that
 [r/EngineeringResumes](https://www.reddit.com/r/EngineeringResumes/wiki/) treats
-as the default recommendation, popularised by Jake Gutierrez's LaTeX template.
-It is the safest choice for engineering applications: single column, no
-graphics, standard section names, and a text layer that parses cleanly through
-an applicant tracking system.
+as its default recommendation, popularised by Jake Gutierrez's LaTeX template,
+and it is the safest choice for engineering applications: standard section
+names, a wide text block that fits an internship history and several projects on
+one page, and a text layer that parses cleanly through an applicant tracking
+system.
 
-[`jake.sty`](resume/templates/jake.sty) is a layout, not a second pipeline. It
-loads `base.sty` and redefines only the type size, the margins, the heading
-spacing, the list spacing and the header. Every entry macro keeps its name and
-its argument order, because that is the contract the pre-processor writes
-against. One generator, two looks.
+The resume is 10pt with 0.5in margins. The cover letter keeps the airier
+setting, because it is prose rather than a scan. Both are one page.
 
-> **Fit content to the page, not the page to the content.** Both builds fail if
-> any document runs past one page. Shrinking the font to win half a line is the
-> wrong fix and reads as one: cut the oldest role, or cut the weakest bullet.
-> The compact layout exists so you can keep a bullet worth keeping, not so you
-> can keep all of them.
+[`resume.sty`](resume/templates/resume.sty) is a layout, not a second pipeline.
+It loads [`base.sty`](resume/templates/base.sty) and overrides only the margins,
+the leading, the heading spacing, the list spacing and the header. Every entry
+macro keeps its name and its argument order, because that is the contract the
+pre-processor writes against.
+
+> **Fit the content to the page, not the page to the content.** The build fails
+> if either document runs past one page. Shrinking the font to win half a line
+> is the wrong fix and reads as one: cut the oldest role, or cut the weakest
+> bullet.
 
 <br>
 
@@ -337,8 +330,8 @@ the `latest` release with the new files.
 | Path | What it holds |
 | :--- | :--- |
 | [resume/configuration/](resume/configuration/) | [`resume_data.template.json`](resume/configuration/resume_data.template.json), the only file you edit |
-| [resume/templates/](resume/templates/) | [`base.sty`](resume/templates/base.sty) with the shared layout, [`jake.sty`](resume/templates/jake.sty) with the compact one, plus a thin style for each document |
-| [resume/source/](resume/source/) | `resume.tex` and `resume_jake.tex`, the two entry points. The cover letter is generated |
+| [resume/templates/](resume/templates/) | [`base.sty`](resume/templates/base.sty) with the shared layout, plus a thin style for each document |
+| [resume/source/](resume/source/) | `resume.tex`, the entry point. The cover letter is generated |
 | [scripts/](scripts/) | [`generate_latex.py`](scripts/generate_latex.py), the pre-processor, and the two build wrappers |
 | [.github/workflows/](.github/workflows/) | Compile and publish |
 
