@@ -44,7 +44,7 @@ Four steps. All of them in your browser. Nothing to install.
 
 **2. Open `resume/configuration/resume_data.json`** and press the pencil icon to edit it.
 
-**3. Replace the example details with your own**, then press **Commit changes**.
+**3. Replace the placeholder details with your own**, then press **Commit changes**.
 
 **4. Wait about two minutes, then open the Releases page** on the right of your repository. Your resume and cover letter are there as PDFs.
 
@@ -172,8 +172,9 @@ instruction. Follow these steps exactly.
 1. Read `resume/configuration/resume_data.template.json`. It is the blank form.
    The `_instructions` block at the top states the content rules and is ignored
    by the pre-processor.
-2. Read `resume/configuration/resume_data.json`. It is a worked example showing
-   the expected shape and tone of every field. All of its details are invented.
+2. Read `resume/configuration/resume_data.json`. It is the shipped example. Its
+   values are placeholders that show the expected shape and tone of every field.
+   It names no real person and no real employer.
 3. Write the user's real content into `resume/configuration/resume_data.json`,
    keeping the structure of the template. Replace every `[BRACKETED_PLACEHOLDER]`
    if you start from the template.

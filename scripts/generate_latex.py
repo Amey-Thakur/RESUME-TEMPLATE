@@ -315,7 +315,10 @@ def safe_name(data) -> str:
     release under a placeholder name.
     """
     name = str((data.get("personal_info") or {}).get("name", "")).strip()
-    if not name or PLACEHOLDER.search(name):
+    # "Your Name" is the value the shipped example carries. Treating it as a
+    # placeholder keeps this repository's own release showing resume.pdf and
+    # cover_letter.pdf, rather than publishing files named after nobody.
+    if not name or PLACEHOLDER.search(name) or name.casefold() == "your name":
         return ""
     cleaned = re.sub(r"[^A-Za-z0-9]+", "_", name).strip("_")
     return cleaned
