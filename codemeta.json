@@ -1,9 +1,9 @@
 {
     "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
     "@type": "SoftwareSourceCode",
-    "name": "RESUME-TEMPLATE",
-    "description": "A modular LaTeX resume and cover letter system with JSON-driven content, automated PDF compilation via Tectonic, and GitHub Actions release publishing.",
-    "identifier": "RESUME-TEMPLATE",
+    "name": "RESUME-ENGINE",
+    "description": "Fill in one JSON file and get a one-page resume and matching cover letter as PDFs, in Jake's Resume format, compiled by Tectonic and published by GitHub Actions. No LaTeX and nothing to install.",
+    "identifier": "RESUME-ENGINE",
     "license": "https://spdx.org/licenses/MIT.html",
     "version": "1.0.0",
     "programmingLanguage": [
@@ -23,8 +23,8 @@
     ],
     "dateReleased": "2026-07-11",
     "dateModified": "2026-08-15",
-    "codeRepository": "https://github.com/Amey-Thakur/RESUME-TEMPLATE",
-    "developmentStatus": "https://www.repostatus.org/#inactive",
+    "codeRepository": "https://github.com/Amey-Thakur/RESUME-ENGINE",
+    "developmentStatus": "https://www.repostatus.org/#active",
     "applicationCategory": "Document Generation",
     "keywords": [
         "resume",

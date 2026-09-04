@@ -1,0 +1,124 @@
+{
+  "_instructions": {
+    "how_to_use": "This is a worked example so the repository builds the moment you copy it. Replace it with your own details. Every field here is fake.",
+    "bullets": "Write each bullet as: accomplished X, as measured by Y, by doing Z. Lead with the outcome, not the task. Put a number in most of them.",
+    "length": "One page for under ten years of experience. Cut the oldest role before you shrink the type. The build fails if either document runs to two pages.",
+    "sections": "section_order decides which sections appear and in what order. Remove a name from it and that section is gone from the PDF.",
+    "ordering": "Experience first once you have industry experience. Projects first while you are a student or changing field.",
+    "separators": "Write a plain | between items. The pre-processor typesets it.",
+    "cover_letter_date": "Leave cover_letter.date empty and the letter carries the build date.",
+    "summary": "Optional. Strong experience speaks for itself, so summary is left out of section_order in this example."
+  },
+
+  "personal_info": {
+    "name": "Riley Chen",
+    "title": "Backend Engineer",
+    "phone": "+1 555 0100",
+    "email": "riley.chen@example.com",
+    "location": "Toronto, Canada",
+    "links": [
+      { "label": "linkedin.com/in/rileychen", "url": "https://linkedin.com/in/rileychen" },
+      { "label": "github.com/rileychen", "url": "https://github.com/rileychen" },
+      { "label": "rileychen.dev", "url": "https://rileychen.dev" }
+    ]
+  },
+
+  "resume": {
+    "section_order": ["experience", "projects", "skills", "education"],
+
+    "summary": "Backend engineer working on payment infrastructure, looking for a platform role.",
+
+    "experience": [
+      {
+        "role": "Backend Engineer",
+        "company": "Northwind Payments",
+        "location": "Toronto, Canada",
+        "date": "Mar 2023 -- Present",
+        "bullets": [
+          "Rebuilt the settlement pipeline serving 40M transactions a day, cutting end-to-end latency from 900ms to 120ms by replacing per-row lookups with a batched read path.",
+          "Designed the idempotency layer shared by 12 services, which removed duplicate charges entirely and reduced support escalations by 71%.",
+          "Traced an intermittent data loss affecting 0.3% of refunds to a silent retry in the message consumer, and fixed it by making the consumer commit offsets only after a durable write.",
+          "Mentored three junior engineers through their first on-call rotation, after which the team's mean time to acknowledge fell from 22 minutes to 6."
+        ]
+      },
+      {
+        "role": "Software Engineer",
+        "company": "Halcyon Analytics",
+        "location": "Vancouver, Canada",
+        "date": "Jul 2021 -- Feb 2023",
+        "bullets": [
+          "Built the ingestion service in Go that backfilled 4 years of event history, 2.1B rows, without downtime on the live cluster.",
+          "Automated the weekly reconciliation report, removing 9 engineer-hours a week of manual spreadsheet work."
+        ]
+      }
+    ],
+
+    "projects": [
+      {
+        "name": "Ledgerline",
+        "stack": "Rust, PostgreSQL, gRPC",
+        "url": "https://github.com/rileychen/ledgerline",
+        "url_label": "github.com/rileychen/ledgerline",
+        "bullets": [
+          "An append-only ledger that keeps double-entry invariants under concurrent writes, verified by a property test suite that runs 50k randomised histories per commit.",
+          "Chose serializable isolation over application-level locking, because a ledger that is merely fast but occasionally wrong is worth nothing."
+        ]
+      },
+      {
+        "name": "Quietlog",
+        "stack": "Python, ClickHouse",
+        "url": "https://github.com/rileychen/quietlog",
+        "url_label": "github.com/rileychen/quietlog",
+        "bullets": [
+          "Collapses repetitive log lines into counted patterns, which cut one team's log storage bill by 64% with no loss of signal in incident review."
+        ]
+      }
+    ],
+
+    "skills": [
+      { "category": "Languages", "items": "Go, Rust, Python, SQL" },
+      { "category": "Data", "items": "PostgreSQL, ClickHouse, Kafka, Redis" },
+      { "category": "Infrastructure", "items": "AWS, Kubernetes, Terraform, GitHub Actions" },
+      { "category": "Practices", "items": "Property testing, Distributed tracing, Incident review" }
+    ],
+
+    "education": [
+      {
+        "institution": "University of Waterloo",
+        "location": "Waterloo, Canada",
+        "degree": "BSc, Computer Science",
+        "date": "2021",
+        "detail": "Thesis on crash-consistent storage engines"
+      }
+    ],
+
+    "publications": [
+      {
+        "citation": "R. Chen. Batched settlement without losing serializability. SIGMOD Industrial Track, 2025.",
+        "url": "https://doi.org/10.0000/example",
+        "url_label": "DOI"
+      }
+    ],
+
+    "certifications": [
+      { "category": "Cloud", "items": "AWS Solutions Architect Associate, Amazon, 2024" }
+    ]
+  },
+
+  "cover_letter": {
+    "recipient": {
+      "name": "",
+      "company": "Meridian Systems",
+      "address": "Toronto, Canada",
+      "greeting": "Dear Hiring Team,"
+    },
+    "date": "",
+    "subject": "Application for Platform Engineer, REQ-4471",
+    "paragraphs": [
+      "I am applying for the Platform Engineer role. I work on payment infrastructure, most recently a settlement pipeline handling 40M transactions a day which brought end-to-end latency down from 900ms to 120ms, and I would like to do that work on your platform team.",
+      "The work closest to yours is Ledgerline. Keeping double-entry invariants true under concurrent writes is the hard part, because the failure is silent and shows up in an audit months later. I made the ledger append-only and serializable, then verified it with 50k randomised histories on every commit. Your job posting describes the same problem at a larger scale.",
+      "I also care about the operational side. After I rewrote our on-call runbooks and mentored three engineers through their first rotation, mean time to acknowledge fell from 22 minutes to 6.",
+      "I would welcome the chance to talk about how you keep reconciliation correct as volume grows. Thank you for your time."
+    ]
+  }
+}

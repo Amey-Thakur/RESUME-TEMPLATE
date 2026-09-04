@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This Code of Conduct establishes expectations for participation in the RESUME-TEMPLATE project and its associated issue tracker, pull requests, and discussions.
+This Code of Conduct establishes expectations for participation in the RESUME-ENGINE project and its associated issue tracker, pull requests, and discussions.
 
 ## Standards
 
@@ -25,6 +25,6 @@ This Code of Conduct applies to all project spaces, including the GitHub reposit
 
 Instances of unacceptable behavior may be reported to the project maintainer:
 - **Developer**: [Amey Thakur](https://github.com/Amey-Thakur)
-- **Method**: [GitHub Issues](https://github.com/Amey-Thakur/RESUME-TEMPLATE/issues)
+- **Method**: [GitHub Issues](https://github.com/Amey-Thakur/RESUME-ENGINE/issues)
 
 Reports will be reviewed promptly. The maintainer reserves the right to remove, edit, or reject contributions that violate this Code of Conduct.

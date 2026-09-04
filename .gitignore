@@ -1,5 +1,6 @@
-# Personal data (contains contact information)
-resume/configuration/resume_data.json
+# resume_data.json is committed on purpose. It is your content, it lives in
+# your own repository, and GitHub Actions cannot build your PDFs without it.
+# The copy in this template is a worked example with invented details.
 
 # Generated files (rebuilt by scripts/generate_latex.py)
 resume/configuration/metadata.tex

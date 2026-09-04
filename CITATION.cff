@@ -4,11 +4,11 @@ authors:
 - family-names: "Thakur"
   given-names: "Amey"
   orcid: "https://orcid.org/0000-0001-5644-1575"
-title: "RESUME-TEMPLATE"
+title: "RESUME-ENGINE"
 version: 1.0.0
 date-released: 2026-07-11
-url: "https://github.com/Amey-Thakur/RESUME-TEMPLATE"
-repository-code: "https://github.com/Amey-Thakur/RESUME-TEMPLATE"
+url: "https://github.com/Amey-Thakur/RESUME-ENGINE"
+repository-code: "https://github.com/Amey-Thakur/RESUME-ENGINE"
 license: MIT
 keywords:
   - resume

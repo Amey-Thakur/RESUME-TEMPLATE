@@ -28,7 +28,7 @@ personal details are not part of this repository's surface.
 
 Open an issue on the repository:
 
-**[github.com/Amey-Thakur/RESUME-TEMPLATE/issues](https://github.com/Amey-Thakur/RESUME-TEMPLATE/issues)**
+**[github.com/Amey-Thakur/RESUME-ENGINE/issues](https://github.com/Amey-Thakur/RESUME-ENGINE/issues)**
 
 Please include:
 
