@@ -2,71 +2,92 @@
 <title>Resume Engine demo frame</title>
 <style>
   /* One frame of the demo GIF. The frame number arrives as ?f=N and the script
-     at the bottom decides what this frame shows, so the whole animation is
-     described in one place. build_demo_gif.py screenshots each frame and
-     assembles them.
+     at the bottom decides what this frame shows, so the whole animation lives
+     in one place. build_demo_gif.py screenshots each frame and assembles them.
 
-     The story is the one worth telling: a posting asks for something, the file
-     changes to answer it, and a one-page PDF comes out. Not the pipeline. */
+     The story: a posting asks for three things, the file answers them one at a
+     time, and a one-page PDF comes out. The ticks are the payoff. */
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { width: 860px; height: 480px; overflow: hidden; background: #eaeff7;
+  body { width: 900px; height: 506px; overflow: hidden;
          font-family: system-ui, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
          color: #0d1117; display: flex; flex-direction: column;
-         -webkit-font-smoothing: antialiased; }
+         -webkit-font-smoothing: antialiased;
+         background:
+           radial-gradient(760px 460px at 78% 40%, #ffffff 0%, rgba(255,255,255,0) 64%),
+           linear-gradient(150deg, #f6f9fd 0%, #e9eff9 60%, #e2eaf7 100%); }
 
-  .bar { height: 44px; background: #0d1117; color: #fff; display: flex;
-         align-items: center; padding: 0 20px; gap: 10px; flex: 0 0 auto; }
-  .bar .dot { width: 10px; height: 10px; border-radius: 50%; background: #2563eb; }
-  .bar b { font-size: 15.5px; }
-  .bar .right { margin-left: auto; font-size: 13px; color: #98a5b6; }
+  .bar { height: 46px; flex: 0 0 auto; display: flex; align-items: center;
+         padding: 0 22px; gap: 11px; color: #fff;
+         background: linear-gradient(90deg, #0d1117 0%, #141c28 100%); }
+  .bar .dot { width: 9px; height: 9px; border-radius: 50%; background: #2563eb;
+              box-shadow: 0 0 0 3px rgba(37,99,235,.28); }
+  .bar b { font-size: 16px; letter-spacing: .1px; }
+  .bar .right { margin-left: auto; font-size: 12.5px; color: #93a1b4; }
 
-  .stage { flex: 1 1 auto; display: flex; align-items: stretch; gap: 0;
-           padding: 16px 20px; }
+  .stage { flex: 1 1 auto; display: flex; align-items: stretch; padding: 18px 22px; }
 
-  .panel { flex: 1 1 0; border-radius: 9px; overflow: hidden; background: #fff;
-           display: flex; flex-direction: column;
-           box-shadow: 0 5px 16px rgba(13,22,44,.11); }
-  .cap { font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
-         text-transform: uppercase; padding: 9px 14px; flex: 0 0 auto;
-         background: #f1f4fa; color: #64718a; }
+  .card { flex: 1 1 0; background: #fff; border-radius: 11px; overflow: hidden;
+          display: flex; flex-direction: column;
+          box-shadow: 0 8px 24px rgba(15,27,52,.11), 0 1px 3px rgba(15,27,52,.07); }
+  .cap { font-size: 10.5px; font-weight: 800; letter-spacing: 1.6px;
+         text-transform: uppercase; padding: 10px 16px; flex: 0 0 auto;
+         color: #64718a; background: #f3f6fb; border-bottom: 1px solid #e6ebf3;
+         display: flex; align-items: center; gap: 7px; }
+  .cap i { width: 6px; height: 6px; border-radius: 50%; background: #97a5bb;
+           display: block; font-style: normal; }
 
-  .jd { padding: 14px; font-size: 13.5px; line-height: 1.72; color: #2c3542; }
-  .jd .h { font-weight: 700; margin-bottom: 7px; font-size: 14px; }
-  .jd .req { padding: 2px 5px; margin: 0 -5px; border-radius: 4px;
-             transition: none; }
-  .jd .on { background: #ffe8a3; box-shadow: 0 0 0 1.5px #f0c33c; font-weight: 600; }
+  /* Left: the posting */
+  .jd { padding: 15px 16px; }
+  .jd .role { font-size: 17px; font-weight: 750; letter-spacing: -.2px; }
+  .jd .meta { font-size: 11.5px; color: #7d8899; margin-top: 3px;
+              padding-bottom: 11px; border-bottom: 1px solid #eef1f6; }
+  .jd .ask { font-size: 11px; font-weight: 700; letter-spacing: .9px;
+             text-transform: uppercase; color: #8390a3; margin: 12px 0 9px; }
+  .req { display: flex; align-items: flex-start; gap: 9px; font-size: 13.5px;
+         line-height: 1.42; color: #313b4a; padding: 6px 7px; margin: 0 -7px 3px;
+         border-radius: 6px; }
+  .req .tick { flex: 0 0 auto; width: 17px; height: 17px; border-radius: 50%;
+               border: 1.6px solid #ccd5e2; margin-top: 1px; color: transparent;
+               font-size: 11px; font-weight: 800; text-align: center;
+               line-height: 14px; }
+  .req.on { background: #fff6dd; box-shadow: inset 0 0 0 1.4px #f0c33c; }
+  .req.done .tick { background: #1f883d; border-color: #1f883d; color: #fff; }
+  .req b { font-weight: 700; }
 
-  .arrow { flex: 0 0 62px; display: flex; align-items: center;
-           justify-content: center; font-size: 26px; color: #93a2b8;
-           font-weight: 300; }
+  .mid { flex: 0 0 58px; display: flex; align-items: center;
+         justify-content: center; }
+  .chev { font-size: 21px; color: #2563eb; font-weight: 700; opacity: .34; }
+  .chev.hot { opacity: 1; }
 
-  .doc { padding: 15px 20px; flex: 1 1 auto; position: relative; }
-  .doc .nm { text-align: center; font-size: 19px; letter-spacing: 1.3px;
-             font-variant: small-caps; font-weight: 600; }
-  .doc .ct { text-align: center; font-size: 8.5px; color: #8a95a6; margin-top: 3px; }
-  .doc .lbl { font-size: 9.5px; font-variant: small-caps; letter-spacing: 1.1px;
-              margin-top: 13px; font-weight: 700; color: #0d1117; }
-  .doc .rule { height: 1px; background: #0d1117; opacity: .8; margin: 2px 0 6px; }
-  .doc .val { font-size: 12.5px; font-weight: 650; padding: 2px 5px;
-              margin: 0 -5px; border-radius: 4px; }
-  .doc .flash { background: #d7f0dd; box-shadow: 0 0 0 1.5px #4bb96a; }
-  .doc .li { height: 4.5px; background: #dfe5ee; border-radius: 2px;
-             margin: 0 0 5px 11px; }
-  .stamp { position: absolute; right: 12px; bottom: 10px; background: #1f883d;
-           color: #fff; font-size: 11.5px; font-weight: 800; letter-spacing: .7px;
-           padding: 6px 11px; border-radius: 5px; visibility: hidden;
-           box-shadow: 0 5px 13px rgba(31,136,61,.32); }
+  /* Right: the document */
+  .doc { padding: 16px 20px 0; flex: 1 1 auto; position: relative; }
+  .doc .nm { text-align: center; font-size: 19.5px; letter-spacing: 1.4px;
+             font-variant: small-caps; font-weight: 620; }
+  .doc .ct { text-align: center; font-size: 8.5px; color: #8d97a7; margin-top: 3px; }
+  .fld { margin-top: 13px; }
+  .fld .lbl { font-size: 9.5px; font-variant: small-caps; letter-spacing: 1.1px;
+              font-weight: 700; }
+  .fld .rule { height: 1px; background: #0d1117; opacity: .8; margin: 2px 0 6px; }
+  .fld .val { font-size: 13px; font-weight: 660; padding: 3px 6px; margin: 0 -6px;
+              border-radius: 5px; }
+  .fld .val.flash { background: #dcf3e2; box-shadow: 0 0 0 1.5px #46b768; }
+  .li { height: 4.5px; background: #e0e6ee; border-radius: 2px; margin: 0 0 5px 11px; }
+  .stamp { position: absolute; right: 14px; bottom: 12px; background: #1f883d;
+           color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .7px;
+           padding: 6px 11px; border-radius: 6px; visibility: hidden;
+           box-shadow: 0 6px 15px rgba(31,136,61,.34); }
 
-  .foot { height: 58px; flex: 0 0 auto; display: flex; align-items: center;
-          padding: 0 20px; gap: 14px; background: #fff;
-          border-top: 1px solid #dbe2ed; }
-  .step { font-size: 15px; font-weight: 680; }
-  .muted { color: #66738a; font-weight: 400; }
-  .track { flex: 1 1 auto; max-width: 260px; height: 5px; background: #e2e8f2;
+  .foot { height: 60px; flex: 0 0 auto; display: flex; align-items: center;
+          padding: 0 22px; gap: 15px; background: #fff;
+          border-top: 1px solid #dfe5ef; }
+  .step { font-size: 15px; font-weight: 690; }
+  .muted { color: #67748a; font-weight: 400; }
+  .track { flex: 1 1 auto; max-width: 230px; height: 6px; background: #e4eaf3;
            border-radius: 3px; overflow: hidden; }
-  .fill { height: 100%; background: #2563eb; width: 0; }
-  .kicker { margin-left: auto; font-size: 12.5px; font-weight: 700;
-            color: #2563eb; visibility: hidden; }
+  .fill { height: 100%; width: 0; border-radius: 3px;
+          background: linear-gradient(90deg, #2563eb, #5b8dff); }
+  .kick { margin-left: auto; font-size: 14px; font-weight: 780; color: #2563eb;
+          letter-spacing: -.1px; visibility: hidden; }
 </style>
 
 <div class="bar">
@@ -75,35 +96,43 @@
 </div>
 
 <div class="stage">
-  <div class="panel">
-    <div class="cap">The job posting</div>
+  <div class="card">
+    <div class="cap"><i></i>The job posting</div>
     <div class="jd">
-      <div class="h">Platform Engineer</div>
-      <div>They want someone who can:</div>
-      <div class="req" id="r1">&bull;&nbsp; run services on <b>Kubernetes</b></div>
-      <div class="req" id="r2">&bull;&nbsp; automate <b>releases end to end</b></div>
-      <div class="req" id="r3">&bull;&nbsp; write <b>Go</b> and <b>Python</b></div>
+      <div class="role">Platform Engineer</div>
+      <div class="meta">Full time &nbsp;·&nbsp; Posted 2 days ago</div>
+      <div class="ask">What they ask for</div>
+      <div class="req" id="r1"><span class="tick">&#10003;</span><span>Run services on <b>Kubernetes</b></span></div>
+      <div class="req" id="r2"><span class="tick">&#10003;</span><span>Automate <b>releases end to end</b></span></div>
+      <div class="req" id="r3"><span class="tick">&#10003;</span><span>Write <b>Go</b> and <b>Python</b></span></div>
     </div>
   </div>
 
-  <div class="arrow">&rarr;</div>
+  <div class="mid"><span class="chev" id="chev">&#10230;</span></div>
 
-  <div class="panel">
-    <div class="cap">Your resume.pdf</div>
+  <div class="card">
+    <div class="cap"><i></i>Your resume.pdf</div>
     <div class="doc">
       <div class="nm">Amey Thakur</div>
       <div class="ct">github.com/Amey-Thakur &nbsp;|&nbsp; ORCID 0000-0001-5644-1575</div>
 
-      <div class="lbl">Target role</div><div class="rule"></div>
-      <div class="val" id="role">Machine Learning Engineer</div>
+      <div class="fld">
+        <div class="lbl">Target role</div><div class="rule"></div>
+        <div class="val" id="role">Machine Learning Engineer</div>
+      </div>
 
-      <div class="lbl">Skills</div><div class="rule"></div>
-      <div class="val" id="skills">Python, PyTorch, Machine Learning</div>
+      <div class="fld">
+        <div class="lbl">Skills</div><div class="rule"></div>
+        <div class="val" id="skills">Python, PyTorch, Machine Learning</div>
+      </div>
 
-      <div class="lbl">Experience</div><div class="rule"></div>
-      <div class="li" style="width:84%"></div>
-      <div class="li" style="width:76%"></div>
-      <div class="li" style="width:80%"></div>
+      <div class="fld">
+        <div class="lbl">Experience</div><div class="rule"></div>
+        <div class="li" style="width:85%"></div>
+        <div class="li" style="width:77%"></div>
+        <div class="li" style="width:81%"></div>
+        <div class="li" style="width:69%"></div>
+      </div>
 
       <div class="stamp" id="stamp">ONE PAGE</div>
     </div>
@@ -113,7 +142,7 @@
 <div class="foot">
   <span class="step" id="step"></span>
   <div class="track"><div class="fill" id="fill"></div></div>
-  <span class="kicker" id="kicker">Same file. Every job.</span>
+  <span class="kick" id="kick">Same file. Every job.</span>
 </div>
 
 <script>
@@ -126,37 +155,40 @@
   const SK_NEW = "Python, Go, Kubernetes, GitHub Actions";
 
   function show(o) {
-    ["r1", "r2", "r3"].forEach((id, i) =>
-      $(id).className = "req" + (o.lit === i + 1 ? " on" : ""));
+    [1, 2, 3].forEach((i) => {
+      const el = $("r" + i);
+      el.className = "req" + (o.lit === i ? " on" : "") +
+                     (o.done >= i ? " done" : "");
+    });
     $("role").textContent = o.role;
     $("skills").textContent = o.skills;
     $("role").className = "val" + (o.flash === "role" ? " flash" : "");
     $("skills").className = "val" + (o.flash === "skills" ? " flash" : "");
+    $("chev").className = "chev" + (o.lit ? " hot" : "");
     $("step").innerHTML = o.step;
     $("fill").style.width = o.pct + "%";
-    $("stamp").style.visibility = o.done ? "visible" : "hidden";
-    $("kicker").style.visibility = o.done ? "visible" : "hidden";
+    $("stamp").style.visibility = o.fin ? "visible" : "hidden";
+    $("kick").style.visibility = o.fin ? "visible" : "hidden";
   }
 
   const READ = "<b>1.</b> Read what the job actually asks for";
   const EDIT = "<b>2.</b> Change those lines <span class='muted'>in one file</span>";
-  const BUILD = "<b>3.</b> Commit <span class='muted'>GitHub builds it, nothing installed</span>";
-  const DONE = "<b>4.</b> A tailored, one-page PDF <span class='muted'>in about two minutes</span>";
+  const SHIP = "<b>3.</b> Commit <span class='muted'>GitHub builds it, nothing installed</span>";
+  const OUT = "<b>4.</b> A tailored, one-page PDF <span class='muted'>in about two minutes</span>";
 
-  const base = { lit: 0, role: ROLE_OLD, skills: SK_OLD, flash: null,
-                 step: READ, pct: 3, done: false };
+  const b = { lit: 0, done: 0, role: ROLE_OLD, skills: SK_OLD, flash: null,
+              step: READ, pct: 3, fin: false };
 
-  if (F <= 3)                       show({ ...base });
-  else if (F <= 6)                  show({ ...base, lit: 1, pct: 10 });
-  else if (F <= 9)                  show({ ...base, lit: 2, pct: 17 });
-  else if (F <= 12)                 show({ ...base, lit: 3, pct: 24 });
-  else if (F <= 17)                 show({ ...base, lit: 1, role: ROLE_NEW,
-                                           flash: "role", step: EDIT, pct: 38 });
-  else if (F <= 22)                 show({ ...base, lit: 3, role: ROLE_NEW,
-                                           skills: SK_NEW, flash: "skills",
-                                           step: EDIT, pct: 52 });
-  else if (F <= 27)                 show({ ...base, role: ROLE_NEW, skills: SK_NEW,
-                                           step: BUILD, pct: 55 + (F - 22) * 8 });
-  else                              show({ ...base, role: ROLE_NEW, skills: SK_NEW,
-                                           step: DONE, pct: 100, done: true });
+  if (F <= 3)        show({ ...b });
+  else if (F <= 6)   show({ ...b, lit: 1, pct: 11 });
+  else if (F <= 11)  show({ ...b, lit: 1, done: 1, role: ROLE_NEW,
+                            flash: "role", step: EDIT, pct: 26 });
+  else if (F <= 14)  show({ ...b, lit: 2, done: 1, role: ROLE_NEW,
+                            step: READ, pct: 34 });
+  else if (F <= 19)  show({ ...b, lit: 3, done: 3, role: ROLE_NEW,
+                            skills: SK_NEW, flash: "skills", step: EDIT, pct: 52 });
+  else if (F <= 25)  show({ ...b, done: 3, role: ROLE_NEW, skills: SK_NEW,
+                            step: SHIP, pct: 58 + (F - 19) * 7 });
+  else               show({ ...b, done: 3, role: ROLE_NEW, skills: SK_NEW,
+                            step: OUT, pct: 100, fin: true });
 </script>

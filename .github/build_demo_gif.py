@@ -24,7 +24,7 @@ except ImportError:
 HERE = Path(__file__).resolve().parent
 PAGE = HERE / "demo_frames.html"
 OUT = HERE / "demo.gif"
-FRAMES = 34
+FRAMES = 32
 
 CHROME = [
     r"C:\Program Files\Google\Chrome\Application\chrome.exe",
@@ -36,8 +36,8 @@ CHROME = [
 
 # Most frames are a typing beat. The three long holds are the ones a reader
 # needs: the starting state, the moment the build finishes, and the result.
-HOLD = {0: 700, 3: 250, 6: 250, 9: 250, 12: 400,
-        17: 620, 22: 700, 27: 260, 33: 2200}
+HOLD = {0: 800, 3: 300, 6: 340, 11: 700, 14: 340,
+        19: 760, 25: 260, 31: 2300}
 BEAT = 110
 
 
@@ -59,7 +59,7 @@ def main():
         shot = cache / f"f{f:02d}.png"
         subprocess.run(
             [exe, "--headless", "--disable-gpu", "--hide-scrollbars",
-             "--force-device-scale-factor=1", "--window-size=860,480",
+             "--force-device-scale-factor=1", "--window-size=900,506",
              f"--screenshot={shot}", f"{PAGE.as_uri()}?f={f}"],
             check=True, capture_output=True, timeout=120)
         shots.append(shot)
@@ -69,7 +69,7 @@ def main():
     images = [Image.open(s).convert("RGB") for s in shots]
     # One shared palette across every frame, so the flat panels do not shimmer
     # from frame to frame the way a per-frame palette makes them.
-    palette = images[-1].quantize(colors=128, method=Image.MEDIANCUT)
+    palette = images[-1].quantize(colors=160, method=Image.MEDIANCUT)
     frames = [im.quantize(palette=palette, dither=Image.Dither.NONE)
               for im in images]
 
