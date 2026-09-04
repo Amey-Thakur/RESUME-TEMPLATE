@@ -12,6 +12,11 @@
 \setlength{\parskip}{9pt}
 \linespread{1.05}\selectfont
 
+% Ragged right, not justified. Justification opens rivers of white space in a
+% narrow measure, and the stretched inter-word spacing it uses to close the
+% line is what comes out wrong when a tracking system extracts the text.
+\raggedright
+
 % One paragraph of the letter body. Using a command rather than raw text keeps
 % the spacing identical between paragraphs no matter what the generator emits.
 \newcommand{\letterPara}[1]{#1\par}
@@ -20,7 +25,7 @@
 \newcommand{\letterRecipient}[3]{%
   \begingroup
   \setlength{\parskip}{0pt}%
-  \ifx\relax#1\relax\else\textbf{#1}\par\fi
+  \ifx\relax#1\relax\else#1\par\fi
   \ifx\relax#2\relax\else#2\par\fi
   \ifx\relax#3\relax\else#3\par\fi
   \endgroup

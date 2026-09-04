@@ -15,24 +15,20 @@ You edit your details in the browser, and GitHub builds both documents for you.
 
 [![License](https://img.shields.io/badge/License-MIT-lightgrey)](LICENSE)
 [![Build](https://github.com/Amey-Thakur/RESUME-ENGINE/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/Amey-Thakur/RESUME-ENGINE/actions/workflows/build.yml)
-[![Format](https://img.shields.io/badge/Format-Jake's_Resume-0969DA)](#the-format)
-[![Length](https://img.shields.io/badge/Length-One_page,_enforced-1F883D)](#the-format)
+[![Technology](https://img.shields.io/badge/Technology-LaTeX_%7C_Python-8250DF)](https://tectonic-typesetting.github.io)
 [![Type](https://img.shields.io/badge/Type-Template-546E7A)](https://github.com/Amey-Thakur/RESUME-ENGINE/generate)
-[![Developed by](https://img.shields.io/badge/Developed_by-Amey_Thakur-8250DF)](https://github.com/Amey-Thakur)
+[![Status](https://img.shields.io/badge/Status-Active-2EA043)](https://github.com/Amey-Thakur/RESUME-ENGINE/commits/main)
+[![Developed by](https://img.shields.io/badge/Developed_by-Amey_Thakur-0969DA)](https://github.com/Amey-Thakur)
 
 <br>
 
-[![Use this template](https://img.shields.io/badge/Start-Use_this_template-2563EB?style=for-the-badge)](https://github.com/Amey-Thakur/RESUME-ENGINE/generate)
+**[Use this template](https://github.com/Amey-Thakur/RESUME-ENGINE/generate)** &nbsp;·&nbsp;
+[See a resume it built](https://github.com/Amey-Thakur/RESUME-ENGINE/releases/latest) &nbsp;·&nbsp;
+[See the cover letter](https://github.com/Amey-Thakur/RESUME-ENGINE/releases/latest)
 
 <br>
 
-[![See the resume it makes](https://img.shields.io/badge/Sample-Resume_PDF-546E7A)](https://github.com/Amey-Thakur/RESUME-ENGINE/releases/latest)
-&nbsp;
-[![See the cover letter it makes](https://img.shields.io/badge/Sample-Cover_Letter_PDF-546E7A)](https://github.com/Amey-Thakur/RESUME-ENGINE/releases/latest)
-
-<br>
-
-<img src=".github/social-preview.png" alt="Resume Engine: fill in one file, and a one-page resume and cover letter are built for you as PDFs">
+<img src=".github/demo.gif" alt="Editing one line in resume_data.json, committing it, and the rebuilt one-page resume PDF appearing" width="800">
 
 </div>
 
@@ -69,7 +65,7 @@ That is the whole loop. Every time you change the file, both PDFs are rebuilt.
 
 ## What you get
 
-| | |
+| What you get | What it is |
 |---|---|
 | **A resume** | One page. Never two, because the build refuses to publish two. |
 | **A cover letter** | One page, in matching type, from the same file. |
@@ -84,11 +80,9 @@ That is the whole loop. Every time you change the file, both PDFs are rebuilt.
 
 ## The format
 
-This uses **Jake's Resume**, the LaTeX layout by Jake Gutierrez that has become
-the default recommendation on r/EngineeringResumes and is widely used for
-applications to large technology companies.
-
-It looks the way it does for reasons that matter to whether a person ever reads it:
+A dense single-column layout, tuned so a full page of evidence still reads
+comfortably. Every choice in it exists for one reason: whether a person ever
+gets to read the thing at all.
 
 **One column.** Application tracking systems read a two-column resume in the
 wrong order and mangle it. One column reads correctly everywhere.
@@ -338,9 +332,8 @@ tectonic resume/source/resume.tex --outdir output --only-cached
 
 ## Credits and licence
 
-The layout follows [Jake's Resume](https://github.com/jakegut/resume) by Jake
-Gutierrez, released under MIT. Compiled with
-[Tectonic](https://tectonic-typesetting.github.io).
+Built and maintained by [Amey Thakur](https://github.com/Amey-Thakur). Compiled
+with [Tectonic](https://tectonic-typesetting.github.io).
 
 This repository is MIT licensed. Use it, change it, and take it to your own
 applications. See [LICENSE](LICENSE).

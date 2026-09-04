@@ -1,0 +1,162 @@
+<meta charset="utf-8">
+<title>Resume Engine demo frame</title>
+<style>
+  /* One frame of the demo GIF. The frame number arrives as ?f=N and the script
+     at the bottom decides what this frame shows, so the whole animation is
+     described in one place. build_demo_gif.py screenshots each frame and
+     assembles them.
+
+     The story is the one worth telling: a posting asks for something, the file
+     changes to answer it, and a one-page PDF comes out. Not the pipeline. */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { width: 860px; height: 480px; overflow: hidden; background: #eaeff7;
+         font-family: system-ui, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+         color: #0d1117; display: flex; flex-direction: column;
+         -webkit-font-smoothing: antialiased; }
+
+  .bar { height: 44px; background: #0d1117; color: #fff; display: flex;
+         align-items: center; padding: 0 20px; gap: 10px; flex: 0 0 auto; }
+  .bar .dot { width: 10px; height: 10px; border-radius: 50%; background: #2563eb; }
+  .bar b { font-size: 15.5px; }
+  .bar .right { margin-left: auto; font-size: 13px; color: #98a5b6; }
+
+  .stage { flex: 1 1 auto; display: flex; align-items: stretch; gap: 0;
+           padding: 16px 20px; }
+
+  .panel { flex: 1 1 0; border-radius: 9px; overflow: hidden; background: #fff;
+           display: flex; flex-direction: column;
+           box-shadow: 0 5px 16px rgba(13,22,44,.11); }
+  .cap { font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
+         text-transform: uppercase; padding: 9px 14px; flex: 0 0 auto;
+         background: #f1f4fa; color: #64718a; }
+
+  .jd { padding: 14px; font-size: 13.5px; line-height: 1.72; color: #2c3542; }
+  .jd .h { font-weight: 700; margin-bottom: 7px; font-size: 14px; }
+  .jd .req { padding: 2px 5px; margin: 0 -5px; border-radius: 4px;
+             transition: none; }
+  .jd .on { background: #ffe8a3; box-shadow: 0 0 0 1.5px #f0c33c; font-weight: 600; }
+
+  .arrow { flex: 0 0 62px; display: flex; align-items: center;
+           justify-content: center; font-size: 26px; color: #93a2b8;
+           font-weight: 300; }
+
+  .doc { padding: 15px 20px; flex: 1 1 auto; position: relative; }
+  .doc .nm { text-align: center; font-size: 19px; letter-spacing: 1.3px;
+             font-variant: small-caps; font-weight: 600; }
+  .doc .ct { text-align: center; font-size: 8.5px; color: #8a95a6; margin-top: 3px; }
+  .doc .lbl { font-size: 9.5px; font-variant: small-caps; letter-spacing: 1.1px;
+              margin-top: 13px; font-weight: 700; color: #0d1117; }
+  .doc .rule { height: 1px; background: #0d1117; opacity: .8; margin: 2px 0 6px; }
+  .doc .val { font-size: 12.5px; font-weight: 650; padding: 2px 5px;
+              margin: 0 -5px; border-radius: 4px; }
+  .doc .flash { background: #d7f0dd; box-shadow: 0 0 0 1.5px #4bb96a; }
+  .doc .li { height: 4.5px; background: #dfe5ee; border-radius: 2px;
+             margin: 0 0 5px 11px; }
+  .stamp { position: absolute; right: 12px; bottom: 10px; background: #1f883d;
+           color: #fff; font-size: 11.5px; font-weight: 800; letter-spacing: .7px;
+           padding: 6px 11px; border-radius: 5px; visibility: hidden;
+           box-shadow: 0 5px 13px rgba(31,136,61,.32); }
+
+  .foot { height: 58px; flex: 0 0 auto; display: flex; align-items: center;
+          padding: 0 20px; gap: 14px; background: #fff;
+          border-top: 1px solid #dbe2ed; }
+  .step { font-size: 15px; font-weight: 680; }
+  .muted { color: #66738a; font-weight: 400; }
+  .track { flex: 1 1 auto; max-width: 260px; height: 5px; background: #e2e8f2;
+           border-radius: 3px; overflow: hidden; }
+  .fill { height: 100%; background: #2563eb; width: 0; }
+  .kicker { margin-left: auto; font-size: 12.5px; font-weight: 700;
+            color: #2563eb; visibility: hidden; }
+</style>
+
+<div class="bar">
+  <span class="dot"></span><b>Resume Engine</b>
+  <span class="right">github.com/Amey-Thakur/RESUME-ENGINE</span>
+</div>
+
+<div class="stage">
+  <div class="panel">
+    <div class="cap">The job posting</div>
+    <div class="jd">
+      <div class="h">Platform Engineer</div>
+      <div>They want someone who can:</div>
+      <div class="req" id="r1">&bull;&nbsp; run services on <b>Kubernetes</b></div>
+      <div class="req" id="r2">&bull;&nbsp; automate <b>releases end to end</b></div>
+      <div class="req" id="r3">&bull;&nbsp; write <b>Go</b> and <b>Python</b></div>
+    </div>
+  </div>
+
+  <div class="arrow">&rarr;</div>
+
+  <div class="panel">
+    <div class="cap">Your resume.pdf</div>
+    <div class="doc">
+      <div class="nm">Amey Thakur</div>
+      <div class="ct">github.com/Amey-Thakur &nbsp;|&nbsp; ORCID 0000-0001-5644-1575</div>
+
+      <div class="lbl">Target role</div><div class="rule"></div>
+      <div class="val" id="role">Machine Learning Engineer</div>
+
+      <div class="lbl">Skills</div><div class="rule"></div>
+      <div class="val" id="skills">Python, PyTorch, Machine Learning</div>
+
+      <div class="lbl">Experience</div><div class="rule"></div>
+      <div class="li" style="width:84%"></div>
+      <div class="li" style="width:76%"></div>
+      <div class="li" style="width:80%"></div>
+
+      <div class="stamp" id="stamp">ONE PAGE</div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <span class="step" id="step"></span>
+  <div class="track"><div class="fill" id="fill"></div></div>
+  <span class="kicker" id="kicker">Same file. Every job.</span>
+</div>
+
+<script>
+  const F = parseInt(new URLSearchParams(location.search).get("f") || "0", 10);
+  const $ = (id) => document.getElementById(id);
+
+  const ROLE_OLD = "Machine Learning Engineer";
+  const ROLE_NEW = "Platform Engineer";
+  const SK_OLD = "Python, PyTorch, Machine Learning";
+  const SK_NEW = "Python, Go, Kubernetes, GitHub Actions";
+
+  function show(o) {
+    ["r1", "r2", "r3"].forEach((id, i) =>
+      $(id).className = "req" + (o.lit === i + 1 ? " on" : ""));
+    $("role").textContent = o.role;
+    $("skills").textContent = o.skills;
+    $("role").className = "val" + (o.flash === "role" ? " flash" : "");
+    $("skills").className = "val" + (o.flash === "skills" ? " flash" : "");
+    $("step").innerHTML = o.step;
+    $("fill").style.width = o.pct + "%";
+    $("stamp").style.visibility = o.done ? "visible" : "hidden";
+    $("kicker").style.visibility = o.done ? "visible" : "hidden";
+  }
+
+  const READ = "<b>1.</b> Read what the job actually asks for";
+  const EDIT = "<b>2.</b> Change those lines <span class='muted'>in one file</span>";
+  const BUILD = "<b>3.</b> Commit <span class='muted'>GitHub builds it, nothing installed</span>";
+  const DONE = "<b>4.</b> A tailored, one-page PDF <span class='muted'>in about two minutes</span>";
+
+  const base = { lit: 0, role: ROLE_OLD, skills: SK_OLD, flash: null,
+                 step: READ, pct: 3, done: false };
+
+  if (F <= 3)                       show({ ...base });
+  else if (F <= 6)                  show({ ...base, lit: 1, pct: 10 });
+  else if (F <= 9)                  show({ ...base, lit: 2, pct: 17 });
+  else if (F <= 12)                 show({ ...base, lit: 3, pct: 24 });
+  else if (F <= 17)                 show({ ...base, lit: 1, role: ROLE_NEW,
+                                           flash: "role", step: EDIT, pct: 38 });
+  else if (F <= 22)                 show({ ...base, lit: 3, role: ROLE_NEW,
+                                           skills: SK_NEW, flash: "skills",
+                                           step: EDIT, pct: 52 });
+  else if (F <= 27)                 show({ ...base, role: ROLE_NEW, skills: SK_NEW,
+                                           step: BUILD, pct: 55 + (F - 22) * 8 });
+  else                              show({ ...base, role: ROLE_NEW, skills: SK_NEW,
+                                           step: DONE, pct: 100, done: true });
+</script>

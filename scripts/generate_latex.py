@@ -278,7 +278,13 @@ def build_cover_letter(data, name_cmd="\\myName") -> str:
         "",
     ]
     if subject:
-        body += [f"\\textbf{{{tex(subject)}}}", ""]
+        # "Re:" is the business-letter convention. It tells a reader, and the
+        # person triaging an inbox, what the letter concerns before they reach
+        # the greeting. Added only when the writer has not already done it.
+        line = tex(subject)
+        if not subject.lower().startswith(("re:", "subject:")):
+            line = "Re: " + line
+        body += [f"\\textbf{{{line}}}", ""]
     body += [f"{tex(greeting)}", ""]
     for para in paragraphs:
         body += [f"\\letterPara{{{tex(para)}}}", ""]
@@ -286,8 +292,10 @@ def build_cover_letter(data, name_cmd="\\myName") -> str:
         "\\vspace{6pt}",
         "Sincerely,",
         "",
-        "\\vspace{18pt}",
-        f"\\textbf{{{name_cmd}}}",
+        # Three blank lines is the business-letter allowance for a signature.
+        # Eighteen points left no room to sign a printed copy.
+        "\\vspace{40pt}",
+        name_cmd,
         "",
         "\\end{document}",
     ]
