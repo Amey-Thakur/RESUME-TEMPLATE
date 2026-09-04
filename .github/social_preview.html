@@ -1,63 +1,80 @@
 <meta charset="utf-8">
 <title>Resume Engine social preview</title>
 <style>
-  /* 1280x640 is GitHub's social card. It is shown at roughly half that width in
-     a feed, so there are four short lines of text and nothing else to read. The
-     right half shows the thing you actually get, because a picture of the
-     output sells this better than a description of the pipeline. */
+  /* 1280x640 is GitHub's social card, shown at roughly half that width in a
+     feed. Four short lines of text, and a picture of what actually comes out.
+     Two sheets rather than one, because the repository produces two documents
+     and a single sheet quietly undersold that. */
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     width: 1280px; height: 640px; display: flex; overflow: hidden;
     font-family: system-ui, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
-    background: #f6f8fc; color: #0d1117;
-    -webkit-font-smoothing: antialiased;
+    background:
+      radial-gradient(900px 520px at 84% 44%, #ffffff 0%, rgba(255,255,255,0) 62%),
+      linear-gradient(146deg, #f7f9fd 0%, #eaf0fa 58%, #e3ebf8 100%);
+    color: #0d1117; -webkit-font-smoothing: antialiased;
   }
-  .edge { width: 14px; height: 100%; background: #2563eb; flex: 0 0 auto; }
+  .edge { width: 14px; height: 100%; flex: 0 0 auto;
+          background: linear-gradient(180deg, #2563eb 0%, #1e4fd0 55%, #1740b4 100%); }
 
-  .left { flex: 1 1 0; padding: 74px 0 74px 72px; display: flex;
+  .left { flex: 1 1 0; padding: 74px 0 74px 74px; display: flex;
           flex-direction: column; justify-content: center; }
-  .kicker { font-size: 17px; font-weight: 700; letter-spacing: 3.4px;
-            color: #2563eb; text-transform: uppercase; margin-bottom: 20px; }
-  h1 { font-size: 82px; line-height: 0.98; font-weight: 800;
-       letter-spacing: -2.4px; margin-bottom: 26px; }
-  .lead { font-size: 30px; line-height: 1.36; color: #303a46;
-          max-width: 15.5em; font-weight: 400; }
+  .kicker { font-size: 16.5px; font-weight: 700; letter-spacing: 3.6px;
+            color: #2563eb; text-transform: uppercase; margin-bottom: 16px; }
+  h1 { font-size: 82px; line-height: 0.97; font-weight: 800;
+       letter-spacing: -2.5px; }
+  /* A short accent under the title, the same blue as the edge, so the two ends
+     of the card belong to each other. */
+  .accent { width: 74px; height: 5px; border-radius: 3px; margin: 22px 0 24px;
+            background: linear-gradient(90deg, #2563eb, #6f9bff); }
+  .lead { font-size: 29.5px; line-height: 1.36; color: #2c3542;
+          max-width: 15.6em; }
   .lead b { font-weight: 700; color: #0d1117; }
 
-  .pills { display: flex; gap: 10px; margin-top: 34px; flex-wrap: wrap;
-           max-width: 27em; }
-  .pill { font-size: 16px; font-weight: 600; color: #33415c;
-          background: #e6ecf7; border: 1px solid #d2dcee;
-          padding: 8px 15px; border-radius: 999px; }
+  /* One line, never two. nowrap is the rule; the column is wide enough. */
+  .pills { display: flex; gap: 9px; margin-top: 32px; flex-wrap: nowrap; }
+  .pill { font-size: 15px; font-weight: 600; color: #33415c; white-space: nowrap;
+          background: rgba(255,255,255,.86); border: 1px solid #cfdaee;
+          padding: 8px 14px; border-radius: 999px;
+          box-shadow: 0 1px 3px rgba(19,38,77,.05); }
 
-  .by { margin-top: 40px; font-size: 17px; color: #5b6674; }
+  .by { margin-top: 36px; font-size: 16.5px; color: #5c6779; }
   .by b { color: #0d1117; font-weight: 700; }
 
-  /* The output, drawn rather than screenshotted, so it stays crisp and carries
-     no invented person's details at card size. */
-  .right { flex: 0 0 508px; display: flex; align-items: center;
-           justify-content: center; padding-right: 62px; }
-  .sheet { width: 348px; height: 452px; background: #fff; border-radius: 3px;
-           box-shadow: 0 18px 44px rgba(13,22,44,.17), 0 2px 6px rgba(13,22,44,.09);
-           padding: 26px 26px 0; position: relative; }
-  .sheet .name { height: 13px; width: 47%; margin: 0 auto 7px;
+  .right { flex: 0 0 520px; display: flex; align-items: center;
+           justify-content: center; padding-right: 58px; }
+  .stack { position: relative; width: 372px; height: 466px; }
+
+  .sheet { position: absolute; background: #fff; border-radius: 4px;
+           width: 340px; height: 442px; }
+  /* The cover letter, behind and turned a little, so the card reads as two
+     documents without needing a word to say so. */
+  .back { top: 14px; left: 0; transform: rotate(-4.6deg);
+          box-shadow: 0 10px 26px rgba(13,22,44,.13);
+          border: 1px solid #eaeef5; }
+  .front { top: 0; left: 30px;
+           box-shadow: 0 20px 48px rgba(13,22,44,.19), 0 3px 8px rgba(13,22,44,.10);
+           padding: 27px 27px 0; }
+
+  .front .name { height: 13px; width: 47%; margin: 0 auto 7px;
                  background: #0d1117; border-radius: 2px; }
-  .sheet .contact { height: 5px; width: 66%; margin: 0 auto 20px;
-                    background: #b8c1cd; border-radius: 2px; }
+  .front .contact { height: 5px; width: 66%; margin: 0 auto 21px;
+                    background: #b9c2ce; border-radius: 2px; }
   .sec { margin-bottom: 15px; }
   .sec .h { height: 7px; width: 33%; background: #2563eb; border-radius: 2px;
             margin-bottom: 5px; }
-  .sec .rule { height: 1.5px; background: #0d1117; opacity: .82;
-               margin-bottom: 9px; }
+  .sec .rule { height: 1.5px; background: #0d1117; opacity: .8; margin-bottom: 9px; }
   .row { display: flex; justify-content: space-between; margin-bottom: 5px; }
   .row .a { height: 6px; background: #333d49; border-radius: 2px; }
-  .row .b { height: 6px; width: 21%; background: #c3ccd8; border-radius: 2px; }
-  .bul { height: 4.5px; background: #d5dce5; border-radius: 2px;
+  .row .b { height: 6px; width: 21%; background: #c4cdd9; border-radius: 2px; }
+  .bul { height: 4.5px; background: #d7dee7; border-radius: 2px;
          margin: 0 0 4px 13px; }
-  .tag { position: absolute; right: -18px; top: -15px; background: #1f883d;
+
+
+  .tag { position: absolute; right: -16px; top: -14px; background: #1f883d;
          color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .6px;
-         padding: 7px 13px; border-radius: 5px;
-         box-shadow: 0 5px 14px rgba(31,136,61,.34); }
+         padding: 7px 13px; border-radius: 6px; z-index: 3;
+         box-shadow: 0 6px 16px rgba(31,136,61,.32); }
 </style>
 
 <div class="edge"></div>
@@ -65,6 +82,7 @@
 <div class="left">
   <div class="kicker">Amey Thakur</div>
   <h1>Resume<br>Engine</h1>
+  <div class="accent"></div>
   <p class="lead">Fill in <b>one file</b>. Get a one-page resume and cover letter, as PDFs.</p>
   <div class="pills">
     <span class="pill">No LaTeX</span>
@@ -75,36 +93,40 @@
 </div>
 
 <div class="right">
-  <div class="sheet">
-    <div class="tag">ONE PAGE</div>
-    <div class="name"></div>
-    <div class="contact"></div>
+  <div class="stack">
+    <div class="sheet back"></div>
 
-    <div class="sec">
-      <div class="h"></div><div class="rule"></div>
-      <div class="row"><div class="a" style="width:52%"></div><div class="b"></div></div>
-      <div class="bul" style="width:80%"></div>
-      <div class="bul" style="width:73%"></div>
-      <div class="row" style="margin-top:9px"><div class="a" style="width:45%"></div><div class="b"></div></div>
-      <div class="bul" style="width:77%"></div>
-    </div>
+    <div class="sheet front">
+      <div class="tag">ONE PAGE</div>
+      <div class="name"></div>
+      <div class="contact"></div>
 
-    <div class="sec">
-      <div class="h" style="width:26%"></div><div class="rule"></div>
-      <div class="row"><div class="a" style="width:40%"></div><div class="b"></div></div>
-      <div class="bul" style="width:82%"></div>
-      <div class="bul" style="width:68%"></div>
-    </div>
+      <div class="sec">
+        <div class="h"></div><div class="rule"></div>
+        <div class="row"><div class="a" style="width:52%"></div><div class="b"></div></div>
+        <div class="bul" style="width:80%"></div>
+        <div class="bul" style="width:73%"></div>
+        <div class="row" style="margin-top:9px"><div class="a" style="width:45%"></div><div class="b"></div></div>
+        <div class="bul" style="width:77%"></div>
+      </div>
 
-    <div class="sec">
-      <div class="h" style="width:21%"></div><div class="rule"></div>
-      <div class="bul" style="width:88%;margin-left:0"></div>
-      <div class="bul" style="width:79%;margin-left:0"></div>
-    </div>
+      <div class="sec">
+        <div class="h" style="width:26%"></div><div class="rule"></div>
+        <div class="row"><div class="a" style="width:40%"></div><div class="b"></div></div>
+        <div class="bul" style="width:82%"></div>
+        <div class="bul" style="width:68%"></div>
+      </div>
 
-    <div class="sec">
-      <div class="h" style="width:29%"></div><div class="rule"></div>
-      <div class="row"><div class="a" style="width:48%"></div><div class="b"></div></div>
+      <div class="sec">
+        <div class="h" style="width:21%"></div><div class="rule"></div>
+        <div class="bul" style="width:88%;margin-left:0"></div>
+        <div class="bul" style="width:79%;margin-left:0"></div>
+      </div>
+
+      <div class="sec">
+        <div class="h" style="width:29%"></div><div class="rule"></div>
+        <div class="row"><div class="a" style="width:48%"></div><div class="b"></div></div>
+      </div>
     </div>
   </div>
 </div>
