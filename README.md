@@ -28,7 +28,7 @@ You edit your details in the browser, and GitHub builds both documents for you.
 
 <br>
 
-<img src=".github/demo.gif" alt="Editing one line in resume_data.json, committing it, and the rebuilt one-page resume PDF appearing" width="800">
+<img src=".github/demo.gif" width="900" alt="A job posting asking for Kubernetes, automated releases, Go and Python. Each requirement ticks green as the resume's target role and skills change to answer it, ending in a one-page PDF.">
 
 </div>
 
